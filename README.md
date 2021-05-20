@@ -15,8 +15,6 @@ G5 is poker playing program (bot) which won first place at [Annual Computer Poke
 
 G5 is written in C++ and C#. Decision making logic is in C++, while Acpc client and program to play against the bot is written in C#. Visual Studio 2017 is required to build and run the program on Windows. While building Acpc client requires .NET core build chain for Linux (Tested in Ubuntu 16.04).
 
-More build instruction yet to come. If you need help building/compiling contact me at ngrujic@gmail.com.
-
 # Playing Logic
 
 Playing logic is based on Bayesian opponent modeling, so it can figure out approximate playing style of opponent from only a few hands. Initial (prior) playing strategy of the opponent is estimated from hand histories from internet play (2 million hands used). After each played hand bot updates the model using Bayesian inference.
