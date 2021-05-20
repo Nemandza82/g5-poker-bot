@@ -1,0 +1,71 @@
+#############################################################
+# Please fill out the following information about your team 
+#############################################################
+
+Team Name: G5
+Agent Name (can be the same as team name): PokerBot5
+
+For each team member, please list the following:
+Name, Team leader (y/n)?, e-mail, Academic (y/n, position - e.g., PhD student)?, University/Business affiliation, Location (city, province/state, country)
+
+Nemanja Grujic
+Team leader: n/a
+ngrujic@gmail.com
+Academic: n
+University/Business affiliation: independent
+Location: Serbia, Nis
+
+Was this submission part of an academic class project?  What level of class
+(undergraduate/graduate)?
+
+No
+
+
+###########################################################################
+# Please provide as much information about your agent as possible as the
+# competition organizers are very interested in knowing more about the
+# techniques used by our competitors.
+###########################################################################
+
+1) Is your agent dynamic?  That is, does its strategy change throughout the
+course of a match, or is the strategy played the same throughout the match?
+
+It's dynamic.
+
+2) Does your agent use a (approximate) Nash equilibrium strategy?
+
+No.
+
+3) Does your agent attempt to model your opponents?  If so, does it do so
+online during the competition or offline from data (e.g., using logs of play or
+the benchmark server)?
+
+Yes. On-line.
+
+4) Does your agent use techniques that would benefit from additional CPU time
+during the competition?
+
+Yes.
+
+5) Does your agent use techniques that would benefit from additional RAM during
+the competition?
+
+No.
+
+6) Would you agent benefit from additional disk space?
+
+No.
+
+One/Two Paragraph Summary of Technique
+
+It traverses the game tree and tries to compute expected value of each possible action. It chooses the 
+action with highest expected value. Opponent strategy (action probability distributions at villain's nodes)
+is modelled using Bayesian graphical modelling. Prior probabilities for the model are obtained from on-line 
+hand histories.
+
+References to relevant papers, if any:
+
+Early work of University of Alberta CPRG (http://poker.cs.ualberta.ca/publications/schauenberg.msc.pdf).
+https://www.coursera.org/learn/probabilistic-graphical-models
+
+

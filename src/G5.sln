@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DecisionMaking", "DecisionMaking\DecisionMaking.vcxproj", "{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G5.Logic", "G5.Logic\G5.Logic.csproj", "{8DA9E727-AADE-4B76-9784-E49B289A8BB7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058} = {ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "G5.Acpc", "G5.Acpc\G5.Acpc.csproj", "{3E8BE8F2-6DB8-4E4B-ABF5-C6B133F8ED40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G5.Controls", "G5.Controls\G5.Controls.csproj", "{3E38024B-FBF1-4B01-80ED-248267443F1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G5.PlayVsBots", "G5.PlayVsBots\G5.PlayVsBots.csproj", "{128782A3-F87A-4E5E-8152-8BC0D782B30E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G5Gym", "G5Gym\G5Gym.csproj", "{77491BC2-A38E-449D-932E-AE1943E60A80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}.Debug|x64.ActiveCfg = Debug|x64
+		{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}.Debug|x64.Build.0 = Debug|x64
+		{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}.Release|x64.ActiveCfg = Release|x64
+		{ECFA0A22-E641-45A8-8E58-DDE2B6E4D058}.Release|x64.Build.0 = Release|x64
+		{8DA9E727-AADE-4B76-9784-E49B289A8BB7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8DA9E727-AADE-4B76-9784-E49B289A8BB7}.Debug|x64.Build.0 = Debug|Any CPU
+		{8DA9E727-AADE-4B76-9784-E49B289A8BB7}.Release|x64.ActiveCfg = Release|Any CPU
+		{8DA9E727-AADE-4B76-9784-E49B289A8BB7}.Release|x64.Build.0 = Release|Any CPU
+		{3E8BE8F2-6DB8-4E4B-ABF5-C6B133F8ED40}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E8BE8F2-6DB8-4E4B-ABF5-C6B133F8ED40}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E8BE8F2-6DB8-4E4B-ABF5-C6B133F8ED40}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E8BE8F2-6DB8-4E4B-ABF5-C6B133F8ED40}.Release|x64.Build.0 = Release|Any CPU
+		{3E38024B-FBF1-4B01-80ED-248267443F1C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3E38024B-FBF1-4B01-80ED-248267443F1C}.Debug|x64.Build.0 = Debug|Any CPU
+		{3E38024B-FBF1-4B01-80ED-248267443F1C}.Release|x64.ActiveCfg = Release|Any CPU
+		{3E38024B-FBF1-4B01-80ED-248267443F1C}.Release|x64.Build.0 = Release|Any CPU
+		{128782A3-F87A-4E5E-8152-8BC0D782B30E}.Debug|x64.ActiveCfg = Debug|x64
+		{128782A3-F87A-4E5E-8152-8BC0D782B30E}.Debug|x64.Build.0 = Debug|x64
+		{128782A3-F87A-4E5E-8152-8BC0D782B30E}.Release|x64.ActiveCfg = Release|x64
+		{128782A3-F87A-4E5E-8152-8BC0D782B30E}.Release|x64.Build.0 = Release|x64
+		{77491BC2-A38E-449D-932E-AE1943E60A80}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{77491BC2-A38E-449D-932E-AE1943E60A80}.Debug|x64.Build.0 = Debug|Any CPU
+		{77491BC2-A38E-449D-932E-AE1943E60A80}.Release|x64.ActiveCfg = Release|Any CPU
+		{77491BC2-A38E-449D-932E-AE1943E60A80}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DC38C87-F79B-451B-94AC-7C51D6111947}
+	EndGlobalSection
+EndGlobal

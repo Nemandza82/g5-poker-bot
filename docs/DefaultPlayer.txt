@@ -1,0 +1,167 @@
+VPIP: 0.42 +- 0.19
+PFR: 0.14 +- 0.10
+WTP: 0.53 +- 0.12
+Agression: 0.66 +- 0.13
+
+Fold, SmallBlind, bets: 0, limpers: 0; BR: 0.23 +- 0.10, CC: 0.60 +- 0.16, FO: 0.16 +- 0.11, CR: 0.00 +- 0.00
+Fold, SmallBlind, bets: 0, limpers: 1; BR: 0.17 +- 0.07, CC: 0.64 +- 0.13, FO: 0.20 +- 0.11, CR: 0.00 +- 0.00
+Fold, SmallBlind, bets: 1, limpers: 0; BR: 0.07 +- 0.05, CC: 0.34 +- 0.10, FO: 0.60 +- 0.11, CR: 0.00 +- 0.00
+Fold, SmallBlind, bets: 1, limpers: 1; BR: 0.07 +- 0.04, CC: 0.31 +- 0.10, FO: 0.62 +- 0.09, CR: 0.00 +- 0.00
+Fold, SmallBlind, bets: 2, limpers: 0; BR: 0.04 +- 0.04, CC: 0.12 +- 0.07, FO: 0.84 +- 0.07, CR: 0.00 +- 0.00
+Fold, BigBlind, bets: 0, limpers: 0; BR: 0.26 +- 0.10, CC: 0.74 +- 0.17, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Fold, BigBlind, bets: 0, limpers: 1; BR: 0.20 +- 0.08, CC: 0.80 +- 0.09, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Fold, BigBlind, bets: 1, limpers: 0; BR: 0.06 +- 0.04, CC: 0.43 +- 0.08, FO: 0.50 +- 0.09, CR: 0.00 +- 0.00
+Fold, BigBlind, bets: 1, limpers: 1; BR: 0.06 +- 0.04, CC: 0.48 +- 0.12, FO: 0.46 +- 0.13, CR: 0.00 +- 0.00
+Fold, BigBlind, bets: 2, limpers: 0; BR: 0.06 +- 0.05, CC: 0.10 +- 0.05, FO: 0.84 +- 0.07, CR: 0.00 +- 0.00
+Fold, Middle1, bets: 0, limpers: 0; BR: 0.17 +- 0.07, CC: 0.29 +- 0.10, FO: 0.54 +- 0.10, CR: 0.00 +- 0.00
+Fold, Middle1, bets: 0, limpers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, Middle1, bets: 1, limpers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, Middle1, bets: 1, limpers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, Middle1, bets: 2, limpers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, Middle2, bets: 0, limpers: 0; BR: 0.17 +- 0.08, CC: 0.32 +- 0.10, FO: 0.51 +- 0.09, CR: 0.00 +- 0.00
+Fold, Middle2, bets: 0, limpers: 1; BR: 0.15 +- 0.07, CC: 0.29 +- 0.10, FO: 0.56 +- 0.10, CR: 0.00 +- 0.00
+Fold, Middle2, bets: 1, limpers: 0; BR: 0.07 +- 0.04, CC: 0.26 +- 0.09, FO: 0.67 +- 0.09, CR: 0.00 +- 0.00
+Fold, Middle2, bets: 1, limpers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, Middle2, bets: 2, limpers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Fold, CutOff, bets: 0, limpers: 0; BR: 0.18 +- 0.07, CC: 0.33 +- 0.11, FO: 0.49 +- 0.10, CR: 0.00 +- 0.00
+Fold, CutOff, bets: 0, limpers: 1; BR: 0.14 +- 0.07, CC: 0.34 +- 0.11, FO: 0.51 +- 0.13, CR: 0.00 +- 0.00
+Fold, CutOff, bets: 1, limpers: 0; BR: 0.06 +- 0.04, CC: 0.23 +- 0.09, FO: 0.71 +- 0.10, CR: 0.00 +- 0.00
+Fold, CutOff, bets: 1, limpers: 1; BR: 0.05 +- 0.03, CC: 0.28 +- 0.09, FO: 0.68 +- 0.09, CR: 0.00 +- 0.00
+Fold, CutOff, bets: 2, limpers: 0; BR: 0.05 +- 0.04, CC: 0.11 +- 0.07, FO: 0.83 +- 0.09, CR: 0.00 +- 0.00
+Fold, Button, bets: 0, limpers: 0; BR: 0.21 +- 0.09, CC: 0.33 +- 0.12, FO: 0.46 +- 0.10, CR: 0.00 +- 0.00
+Fold, Button, bets: 0, limpers: 1; BR: 0.16 +- 0.08, CC: 0.35 +- 0.11, FO: 0.49 +- 0.10, CR: 0.00 +- 0.00
+Fold, Button, bets: 1, limpers: 0; BR: 0.08 +- 0.06, CC: 0.28 +- 0.13, FO: 0.64 +- 0.12, CR: 0.00 +- 0.00
+Fold, Button, bets: 1, limpers: 1; BR: 0.06 +- 0.04, CC: 0.27 +- 0.12, FO: 0.67 +- 0.13, CR: 0.00 +- 0.00
+Fold, Button, bets: 2, limpers: 0; BR: 0.05 +- 0.04, CC: 0.12 +- 0.07, FO: 0.82 +- 0.07, CR: 0.00 +- 0.00
+Call, in_pos, players: 2, raises: 1, callers: 0; BR: 0.05 +- 0.04, CC: 0.66 +- 0.11, FO: 0.28 +- 0.11, CR: 0.00 +- 0.00
+Call, in_pos, players: 2, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Call, in_pos, players: 2, raises: 2, callers: 0; BR: 0.09 +- 0.05, CC: 0.46 +- 0.13, FO: 0.45 +- 0.09, CR: 0.00 +- 0.00
+Call, in_pos, players: 3, raises: 1, callers: 0; BR: 0.05 +- 0.05, CC: 0.60 +- 0.13, FO: 0.35 +- 0.12, CR: 0.00 +- 0.00
+Call, in_pos, players: 3, raises: 1, callers: 1; BR: 0.05 +- 0.04, CC: 0.71 +- 0.10, FO: 0.24 +- 0.10, CR: 0.00 +- 0.00
+Call, in_pos, players: 3, raises: 2, callers: 0; BR: 0.08 +- 0.06, CC: 0.41 +- 0.12, FO: 0.51 +- 0.13, CR: 0.00 +- 0.00
+Call, oo_pos, players: 2, raises: 1, callers: 0; BR: 0.05 +- 0.03, CC: 0.59 +- 0.12, FO: 0.36 +- 0.11, CR: 0.00 +- 0.00
+Call, oo_pos, players: 2, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Call, oo_pos, players: 2, raises: 2, callers: 0; BR: 0.09 +- 0.06, CC: 0.47 +- 0.10, FO: 0.44 +- 0.09, CR: 0.00 +- 0.00
+Call, oo_pos, players: 3, raises: 1, callers: 0; BR: 0.05 +- 0.03, CC: 0.56 +- 0.13, FO: 0.39 +- 0.12, CR: 0.00 +- 0.00
+Call, oo_pos, players: 3, raises: 1, callers: 1; BR: 0.05 +- 0.04, CC: 0.65 +- 0.14, FO: 0.31 +- 0.14, CR: 0.00 +- 0.00
+Call, oo_pos, players: 3, raises: 2, callers: 0; BR: 0.06 +- 0.04, CC: 0.34 +- 0.09, FO: 0.60 +- 0.09, CR: 0.00 +- 0.00
+Raise, in_pos, players: 2, raises: 1, callers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, in_pos, players: 2, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, in_pos, players: 2, raises: 2, callers: 0; BR: 0.24 +- 0.11, CC: 0.61 +- 0.10, FO: 0.14 +- 0.08, CR: 0.00 +- 0.00
+Raise, in_pos, players: 3, raises: 1, callers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, in_pos, players: 3, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, in_pos, players: 3, raises: 2, callers: 0; BR: 0.20 +- 0.10, CC: 0.59 +- 0.13, FO: 0.20 +- 0.10, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 2, raises: 1, callers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 2, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 2, raises: 2, callers: 0; BR: 0.23 +- 0.11, CC: 0.63 +- 0.11, FO: 0.14 +- 0.09, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 3, raises: 1, callers: 0; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 3, raises: 1, callers: 1; BR: 0.33 +- 0.19, CC: 0.33 +- 0.19, FO: 0.33 +- 0.19, CR: 0.00 +- 0.00
+Raise, oo_pos, players: 3, raises: 2, callers: 0; BR: 0.18 +- 0.11, CC: 0.57 +- 0.11, FO: 0.25 +- 0.11, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 0, not in position, pl: 2; BR: 0.61 +- 0.16, CC: 0.39 +- 0.16, FO: 0.00 +- 0.00, CR: 0.20 +- 0.19
+Flop, prev.str.act.: Raise, bets: 0, not in position, pl: 3; BR: 0.55 +- 0.12, CC: 0.45 +- 0.12, FO: 0.00 +- 0.00, CR: 0.11 +- 0.10
+Flop, prev.str.act.: Raise, bets: 0, yes in position, pl: 2; BR: 0.68 +- 0.13, CC: 0.32 +- 0.13, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 0, yes in position, pl: 3; BR: 0.60 +- 0.11, CC: 0.40 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 1, not in position, pl: 2; BR: 0.14 +- 0.09, CC: 0.41 +- 0.10, FO: 0.45 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 1, not in position, pl: 3; BR: 0.13 +- 0.07, CC: 0.46 +- 0.13, FO: 0.41 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 1, yes in position, pl: 2; BR: 0.28 +- 0.12, CC: 0.48 +- 0.13, FO: 0.23 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 1, yes in position, pl: 3; BR: 0.22 +- 0.11, CC: 0.45 +- 0.13, FO: 0.33 +- 0.07, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 2, not in position, pl: 2; BR: 0.21 +- 0.09, CC: 0.53 +- 0.10, FO: 0.26 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 2, not in position, pl: 3; BR: 0.15 +- 0.08, CC: 0.34 +- 0.10, FO: 0.51 +- 0.11, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 2, yes in position, pl: 2; BR: 0.21 +- 0.10, CC: 0.52 +- 0.11, FO: 0.26 +- 0.09, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Raise, bets: 2, yes in position, pl: 3; BR: 0.17 +- 0.10, CC: 0.33 +- 0.10, FO: 0.50 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 0, not in position, pl: 2; BR: 0.23 +- 0.13, CC: 0.77 +- 0.13, FO: 0.00 +- 0.00, CR: 0.09 +- 0.06
+Flop, prev.str.act.: Call, bets: 0, not in position, pl: 3; BR: 0.25 +- 0.11, CC: 0.75 +- 0.10, FO: 0.00 +- 0.00, CR: 0.06 +- 0.06
+Flop, prev.str.act.: Call, bets: 0, yes in position, pl: 2; BR: 0.41 +- 0.15, CC: 0.59 +- 0.15, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 0, yes in position, pl: 3; BR: 0.39 +- 0.13, CC: 0.61 +- 0.14, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 1, not in position, pl: 2; BR: 0.07 +- 0.05, CC: 0.38 +- 0.10, FO: 0.55 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 1, not in position, pl: 3; BR: 0.06 +- 0.04, CC: 0.33 +- 0.07, FO: 0.62 +- 0.06, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 1, yes in position, pl: 2; BR: 0.12 +- 0.08, CC: 0.48 +- 0.10, FO: 0.40 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 1, yes in position, pl: 3; BR: 0.09 +- 0.06, CC: 0.45 +- 0.11, FO: 0.46 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 2, not in position, pl: 2; BR: 0.13 +- 0.06, CC: 0.59 +- 0.12, FO: 0.28 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 2, not in position, pl: 3; BR: 0.11 +- 0.07, CC: 0.29 +- 0.08, FO: 0.60 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 2, yes in position, pl: 2; BR: 0.27 +- 0.11, CC: 0.50 +- 0.11, FO: 0.22 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Call, bets: 2, yes in position, pl: 3; BR: 0.11 +- 0.07, CC: 0.27 +- 0.10, FO: 0.62 +- 0.12, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 0, not in position, pl: 2; BR: 0.17 +- 0.08, CC: 0.83 +- 0.08, FO: 0.00 +- 0.00, CR: 0.06 +- 0.06
+Flop, prev.str.act.: Check, bets: 0, not in position, pl: 3; BR: 0.20 +- 0.11, CC: 0.80 +- 0.11, FO: 0.00 +- 0.00, CR: 0.03 +- 0.03
+Flop, prev.str.act.: Check, bets: 0, yes in position, pl: 2; BR: 0.35 +- 0.11, CC: 0.65 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 0, yes in position, pl: 3; BR: 0.50 +- 0.29, CC: 0.50 +- 0.29, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 1, not in position, pl: 2; BR: 0.05 +- 0.04, CC: 0.30 +- 0.10, FO: 0.65 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 1, not in position, pl: 3; BR: 0.04 +- 0.03, CC: 0.33 +- 0.09, FO: 0.63 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 1, yes in position, pl: 2; BR: 0.08 +- 0.05, CC: 0.42 +- 0.09, FO: 0.50 +- 0.09, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 1, yes in position, pl: 3; BR: 0.10 +- 0.03, CC: 0.19 +- 0.03, FO: 0.71 +- 0.03, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 2, not in position, pl: 2; BR: 0.11 +- 0.06, CC: 0.69 +- 0.10, FO: 0.20 +- 0.10, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 2, not in position, pl: 3; BR: 0.06 +- 0.04, CC: 0.33 +- 0.12, FO: 0.61 +- 0.11, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 2, yes in position, pl: 2; BR: 0.13 +- 0.06, CC: 0.55 +- 0.11, FO: 0.32 +- 0.11, CR: 0.00 +- 0.00
+Flop, prev.str.act.: Check, bets: 2, yes in position, pl: 3; BR: 0.10 +- 0.03, CC: 0.24 +- 0.03, FO: 0.67 +- 0.03, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 0, not in position, pl: 2; BR: 0.67 +- 0.16, CC: 0.33 +- 0.16, FO: 0.00 +- 0.00, CR: 0.11 +- 0.14
+Turn, prev.str.act.: Raise, bets: 0, not in position, pl: 3; BR: 0.65 +- 0.10, CC: 0.35 +- 0.10, FO: 0.00 +- 0.00, CR: 0.08 +- 0.11
+Turn, prev.str.act.: Raise, bets: 0, yes in position, pl: 2; BR: 0.60 +- 0.16, CC: 0.40 +- 0.16, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 0, yes in position, pl: 3; BR: 0.64 +- 0.10, CC: 0.36 +- 0.10, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 1, not in position, pl: 2; BR: 0.09 +- 0.05, CC: 0.50 +- 0.12, FO: 0.41 +- 0.13, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 1, not in position, pl: 3; BR: 0.11 +- 0.07, CC: 0.45 +- 0.10, FO: 0.44 +- 0.09, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 1, yes in position, pl: 2; BR: 0.31 +- 0.10, CC: 0.49 +- 0.11, FO: 0.20 +- 0.09, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 1, yes in position, pl: 3; BR: 0.32 +- 0.10, CC: 0.46 +- 0.12, FO: 0.22 +- 0.09, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 2, not in position, pl: 2; BR: 0.13 +- 0.08, CC: 0.58 +- 0.10, FO: 0.29 +- 0.11, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 2, not in position, pl: 3; BR: 0.10 +- 0.08, CC: 0.52 +- 0.14, FO: 0.38 +- 0.13, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 2, yes in position, pl: 2; BR: 0.21 +- 0.08, CC: 0.58 +- 0.11, FO: 0.20 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Raise, bets: 2, yes in position, pl: 3; BR: 0.21 +- 0.10, CC: 0.44 +- 0.07, FO: 0.36 +- 0.12, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 0, not in position, pl: 2; BR: 0.16 +- 0.10, CC: 0.84 +- 0.10, FO: 0.00 +- 0.00, CR: 0.13 +- 0.08
+Turn, prev.str.act.: Call, bets: 0, not in position, pl: 3; BR: 0.16 +- 0.09, CC: 0.84 +- 0.09, FO: 0.00 +- 0.00, CR: 0.09 +- 0.07
+Turn, prev.str.act.: Call, bets: 0, yes in position, pl: 2; BR: 0.50 +- 0.14, CC: 0.50 +- 0.14, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 0, yes in position, pl: 3; BR: 0.41 +- 0.11, CC: 0.59 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 1, not in position, pl: 2; BR: 0.13 +- 0.08, CC: 0.55 +- 0.10, FO: 0.33 +- 0.09, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 1, not in position, pl: 3; BR: 0.11 +- 0.06, CC: 0.49 +- 0.09, FO: 0.40 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 1, yes in position, pl: 2; BR: 0.13 +- 0.06, CC: 0.64 +- 0.11, FO: 0.23 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 1, yes in position, pl: 3; BR: 0.13 +- 0.09, CC: 0.52 +- 0.14, FO: 0.35 +- 0.13, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 2, not in position, pl: 2; BR: 0.19 +- 0.09, CC: 0.58 +- 0.12, FO: 0.23 +- 0.09, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 2, not in position, pl: 3; BR: 0.09 +- 0.07, CC: 0.39 +- 0.10, FO: 0.52 +- 0.11, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 2, yes in position, pl: 2; BR: 0.29 +- 0.12, CC: 0.49 +- 0.10, FO: 0.22 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Call, bets: 2, yes in position, pl: 3; BR: 0.10 +- 0.06, CC: 0.34 +- 0.09, FO: 0.55 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 0, not in position, pl: 2; BR: 0.34 +- 0.11, CC: 0.66 +- 0.11, FO: 0.00 +- 0.00, CR: 0.09 +- 0.10
+Turn, prev.str.act.: Check, bets: 0, not in position, pl: 3; BR: 0.23 +- 0.10, CC: 0.77 +- 0.10, FO: 0.00 +- 0.00, CR: 0.06 +- 0.06
+Turn, prev.str.act.: Check, bets: 0, yes in position, pl: 2; BR: 0.32 +- 0.11, CC: 0.68 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 0, yes in position, pl: 3; BR: 0.27 +- 0.09, CC: 0.73 +- 0.09, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 1, not in position, pl: 2; BR: 0.06 +- 0.04, CC: 0.35 +- 0.10, FO: 0.59 +- 0.12, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 1, not in position, pl: 3; BR: 0.06 +- 0.04, CC: 0.30 +- 0.09, FO: 0.64 +- 0.10, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 1, yes in position, pl: 2; BR: 0.08 +- 0.05, CC: 0.45 +- 0.12, FO: 0.47 +- 0.12, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 1, yes in position, pl: 3; BR: 0.06 +- 0.05, CC: 0.40 +- 0.11, FO: 0.54 +- 0.11, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 2, not in position, pl: 2; BR: 0.14 +- 0.07, CC: 0.57 +- 0.12, FO: 0.29 +- 0.11, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 2, not in position, pl: 3; BR: 0.07 +- 0.05, CC: 0.29 +- 0.10, FO: 0.64 +- 0.11, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 2, yes in position, pl: 2; BR: 0.25 +- 0.10, CC: 0.49 +- 0.14, FO: 0.27 +- 0.12, CR: 0.00 +- 0.00
+Turn, prev.str.act.: Check, bets: 2, yes in position, pl: 3; BR: 0.06 +- 0.05, CC: 0.24 +- 0.08, FO: 0.70 +- 0.08, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 0, not in position, pl: 2; BR: 0.70 +- 0.12, CC: 0.30 +- 0.12, FO: 0.00 +- 0.00, CR: 0.08 +- 0.13
+River, prev.str.act.: Raise, bets: 0, not in position, pl: 3; BR: 0.59 +- 0.14, CC: 0.41 +- 0.14, FO: 0.00 +- 0.00, CR: 0.05 +- 0.08
+River, prev.str.act.: Raise, bets: 0, yes in position, pl: 2; BR: 0.59 +- 0.11, CC: 0.41 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 0, yes in position, pl: 3; BR: 0.56 +- 0.11, CC: 0.44 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 1, not in position, pl: 2; BR: 0.08 +- 0.06, CC: 0.34 +- 0.10, FO: 0.58 +- 0.11, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 1, not in position, pl: 3; BR: 0.10 +- 0.07, CC: 0.27 +- 0.09, FO: 0.63 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 1, yes in position, pl: 2; BR: 0.28 +- 0.09, CC: 0.40 +- 0.11, FO: 0.31 +- 0.12, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 1, yes in position, pl: 3; BR: 0.26 +- 0.10, CC: 0.37 +- 0.11, FO: 0.37 +- 0.13, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 2, not in position, pl: 2; BR: 0.12 +- 0.08, CC: 0.50 +- 0.09, FO: 0.38 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 2, not in position, pl: 3; BR: 0.09 +- 0.05, CC: 0.31 +- 0.10, FO: 0.60 +- 0.12, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 2, yes in position, pl: 2; BR: 0.23 +- 0.09, CC: 0.46 +- 0.12, FO: 0.31 +- 0.11, CR: 0.00 +- 0.00
+River, prev.str.act.: Raise, bets: 2, yes in position, pl: 3; BR: 0.26 +- 0.08, CC: 0.31 +- 0.12, FO: 0.43 +- 0.19, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 0, not in position, pl: 2; BR: 0.19 +- 0.10, CC: 0.81 +- 0.11, FO: 0.00 +- 0.00, CR: 0.13 +- 0.08
+River, prev.str.act.: Call, bets: 0, not in position, pl: 3; BR: 0.20 +- 0.09, CC: 0.80 +- 0.09, FO: 0.00 +- 0.00, CR: 0.10 +- 0.09
+River, prev.str.act.: Call, bets: 0, yes in position, pl: 2; BR: 0.49 +- 0.13, CC: 0.51 +- 0.13, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 0, yes in position, pl: 3; BR: 0.38 +- 0.10, CC: 0.62 +- 0.11, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 1, not in position, pl: 2; BR: 0.09 +- 0.05, CC: 0.34 +- 0.09, FO: 0.58 +- 0.11, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 1, not in position, pl: 3; BR: 0.12 +- 0.08, CC: 0.31 +- 0.09, FO: 0.57 +- 0.10, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 1, yes in position, pl: 2; BR: 0.21 +- 0.10, CC: 0.39 +- 0.12, FO: 0.39 +- 0.12, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 1, yes in position, pl: 3; BR: 0.18 +- 0.08, CC: 0.32 +- 0.08, FO: 0.50 +- 0.11, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 2, not in position, pl: 2; BR: 0.19 +- 0.08, CC: 0.49 +- 0.10, FO: 0.32 +- 0.10, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 2, not in position, pl: 3; BR: 0.10 +- 0.06, CC: 0.16 +- 0.07, FO: 0.75 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 2, yes in position, pl: 2; BR: 0.26 +- 0.10, CC: 0.48 +- 0.10, FO: 0.26 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Call, bets: 2, yes in position, pl: 3; BR: 0.11 +- 0.06, CC: 0.19 +- 0.08, FO: 0.70 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 0, not in position, pl: 2; BR: 0.39 +- 0.14, CC: 0.61 +- 0.15, FO: 0.00 +- 0.00, CR: 0.07 +- 0.17
+River, prev.str.act.: Check, bets: 0, not in position, pl: 3; BR: 0.20 +- 0.11, CC: 0.80 +- 0.10, FO: 0.00 +- 0.00, CR: 0.03 +- 0.03
+River, prev.str.act.: Check, bets: 0, yes in position, pl: 2; BR: 0.31 +- 0.10, CC: 0.69 +- 0.10, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 0, yes in position, pl: 3; BR: 0.23 +- 0.10, CC: 0.77 +- 0.09, FO: 0.00 +- 0.00, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 1, not in position, pl: 2; BR: 0.04 +- 0.03, CC: 0.25 +- 0.09, FO: 0.71 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 1, not in position, pl: 3; BR: 0.07 +- 0.06, CC: 0.14 +- 0.07, FO: 0.79 +- 0.09, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 1, yes in position, pl: 2; BR: 0.14 +- 0.06, CC: 0.34 +- 0.12, FO: 0.52 +- 0.11, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 1, yes in position, pl: 3; BR: 0.10 +- 0.06, CC: 0.20 +- 0.08, FO: 0.70 +- 0.10, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 2, not in position, pl: 2; BR: 0.16 +- 0.07, CC: 0.43 +- 0.10, FO: 0.41 +- 0.10, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 2, not in position, pl: 3; BR: 0.07 +- 0.05, CC: 0.16 +- 0.08, FO: 0.77 +- 0.08, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 2, yes in position, pl: 2; BR: 0.24 +- 0.10, CC: 0.45 +- 0.10, FO: 0.31 +- 0.10, CR: 0.00 +- 0.00
+River, prev.str.act.: Check, bets: 2, yes in position, pl: 3; BR: 0.09 +- 0.06, CC: 0.12 +- 0.06, FO: 0.79 +- 0.10, CR: 0.00 +- 0.00

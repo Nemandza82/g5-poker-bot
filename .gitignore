@@ -1,0 +1,6 @@
+*.ipch
+*.user
+/src/.vs/
+obj
+/dl/.vscode
+/dl/__pycache__
