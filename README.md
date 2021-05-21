@@ -8,7 +8,7 @@ G5 is poker playing program (bot) which won first place at [Annual Computer Poke
 
 ## Quick Links
 
- * Acpc 2017 results: http://www.computerpokercompetition.org/index.php/competitions/results/125-2017-results
+ * Acpc 2017 results: http://www.computerpokercompetition.org/downloads/competitions/2017/xtable/
  * Acpc 2018 results: http://www.computerpokercompetition.org/index.php/competitions/results/128-2018-results
 
 ## Building
