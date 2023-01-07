@@ -6,10 +6,10 @@ make
 cd ..
 
 # Clean contents of bin dir
-mkdir bin
-cd bin
-rm -rf *
-cd ..
+#mkdir bin
+#cd bin
+#rm -rf *
+#cd ..
 
 # Build the dotnet projects...
 cd G5Gym
@@ -19,7 +19,7 @@ cd ..
 
 # Copy all redist files (probabilities etc)
 cp DecisionMaking/libdec_making.so ../dl/gym/DecisionMaking.dll
-cp ../redist/PreFlopEquities.txt ../dl/gym/
-cp ../redist/full_stats_list_6max.bin ../dl/gym/
-cp ../redist/full_stats_list_6max_2m.bin ../dl/gym/
-cp ../redist/full_stats_list_hu.bin ../dl/gym/
+cp ../redist/PreFlopEquities.txt ../dl/
+#cp ../redist/full_stats_list_6max.bin ../dl/
+#cp ../redist/full_stats_list_6max_2m.bin ../dl/
+cp ../redist/full_stats_list_hu.bin ../dl/

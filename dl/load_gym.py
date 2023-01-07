@@ -1,3 +1,6 @@
+from pythonnet import load
+load("coreclr")
+
 import clr
 
 def load_gym():
@@ -38,4 +41,4 @@ def test():
     for i in range(state.actions.Count):
         print(state.actions[i])
 
-#test()
+test()
