@@ -8,13 +8,13 @@ cd ..
 # Clean contents of bin dir
 mkdir bin
 cd bin
-rm *
+rm -rf *
 cd ..
 
 # Build the dotnet projects...
 cd G5.Acpc
 dotnet restore
-dotnet publish -c Release -o ../bin -f netcoreapp1.1 -r ubuntu.16.04-x64
+dotnet publish -c Release -o ../bin -f net6.0 -r ubuntu.20.04-x64
 cd ..
 
 # Copy all redist files (probabilities etc)
