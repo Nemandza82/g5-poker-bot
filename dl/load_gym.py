@@ -12,23 +12,21 @@ def test():
     gym = load_gym()
     gym.testCall()
 
-    arr = gym.testCallArray()
-
-    print(arr)
+    #arr = gym.testCallArray()
+    #print(arr)
     #print(len(arr))
-    print(arr[0])
-    print(arr[1])
+    #print(arr[0])
+    #print(arr[1])
 
     obj = gym.testCallStruct()
-    print(obj)
+    print(f"testCallStruct {obj}")
 
     state = gym.startHand()
 
-    print("Pot Size:")
-    print(state.pot_size)
+    print(f"State {state}")
 
-    print("Ammount to call:")
-    print(state.ammount_to_call)
+    print(f"Pot Size: {state.pot_size}")
+    print(f"Ammount to call: {state.ammount_to_call}")
 
     print("HoleCards:")
     print(state.hole_cards)
