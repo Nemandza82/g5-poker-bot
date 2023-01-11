@@ -1,0 +1,3 @@
+[submodule "dl/bert_poker_bot"]
+	path = dl/bert_poker_bot
+	url = git@github.com:Nemandza82/bert_poker_bot.git
