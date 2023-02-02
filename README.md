@@ -21,6 +21,14 @@ Playing logic is based on Bayesian opponent modeling, so it can figure out appro
 
 Opponent model is then used in standard [Expectiminimax](https://en.wikipedia.org/wiki/Expectiminimax) or Miximax search through game tree, where opponent range is also estimated using Bayesian inference as hand progresses. At opponent nodes, algorithm considers all possible actions with probabilities given by opponent model.  At leaf nodes expected value is calculated using estimated opponent range.
 
+## Recent Developments and Resources
+
+* Ruse: https://www.ruse.ai/news/ruse-vs-slumbot
+* Slumbot: https://www.slumbot.com/#
+* Supremus: https://arxiv.org/pdf/2007.10442.pdf
+* ReBel: https://arxiv.org/pdf/2007.13544.pdf
+* Safe and Nested Subgame Solving: http://www.cs.cmu.edu/~noamb/papers/17-NIPS-Safe.pdf
+
 ## License
 
 G5 is released under MIT license.
