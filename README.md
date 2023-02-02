@@ -23,6 +23,8 @@ Opponent model is then used in standard [Expectiminimax](https://en.wikipedia.or
 
 ## Recent Developments and Resources
 
+Sumarisation of recent research: https://aipokertutorial.com/top-agents-and-research/
+
 * Intermission - wining bot in 2017 competition: http://www.unfoldpoker.com/intermission-2017/
 * Ruse: https://www.ruse.ai/news/ruse-vs-slumbot
 * Slumbot: https://www.slumbot.com/#
