@@ -12,7 +12,7 @@ namespace G5.Logic
         public Position PreFlopPosition { get; set; }
 
         public Range Range { get; private set; }
-        public PlayerModel Model { get; private set; }
+        public PlayerModel Model { get; set; }
 
         public int Stack { get; private set; }
         public int MoneyInPot { get; private set; }
@@ -48,11 +48,6 @@ namespace G5.Logic
 
             Range = new Range(oldPlayer.Range);
             Model = new PlayerModel(oldPlayer.Model);
-        }
-
-        public void UpdateModel(PlayerModel newModel)
-        {
-            Model = newModel;
         }
 
         public void SetStackSize(int size)

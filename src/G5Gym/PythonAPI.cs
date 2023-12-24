@@ -16,7 +16,7 @@ namespace G5Gym
         private OpponentModeling _opponentModeling;
         private BotGameState? _botGameState; 
 
-        public PythonAPI(int numPlayers, int bigBlindSize)
+        public PythonAPI(int numPlayers)
         {
             var opponentModelingOptions = new OpponentModeling.Options();
             opponentModelingOptions.recentHandsCount = 50;
@@ -26,14 +26,12 @@ namespace G5Gym
             if (numPlayers == 2)
             {
                 _opponentModeling = new OpponentModeling(assemblyFolder + "/full_stats_list_hu.bin", 
-                    bigBlindSize, 
                     TableType.HeadsUp, 
                     opponentModelingOptions);
             }
             else if (numPlayers > 2 && numPlayers <= 6)
             {
                 _opponentModeling = new OpponentModeling(assemblyFolder + "/full_stats_list_6max.bin", 
-                    bigBlindSize, 
                     TableType.SixMax, 
                     opponentModelingOptions);
             }
@@ -46,11 +44,6 @@ namespace G5Gym
             _botGameState = null;
         }
 
-        public void testCall()
-        {
-            Console.WriteLine("G5.Gym: Loaded Successfully");
-        }
-
         public dynamic testCallArray()
         {
             return (new int[] { 1, 3, 5, 7, 9 }).ToList();
@@ -61,9 +54,35 @@ namespace G5Gym
             return new { Amount = 108, Message = "Hello" };
         }
 
-        public dynamic newHand()
+        // bigBlindSize int in cents. Eg. $0.04 is 4.
+        public void createGame(string[] playerNames, int[] stackSizes, int heroInd, int buttonInd, int bigBlindSize)
         {
-            return "";
+            _botGameState = new BotGameState(playerNames, 
+                stackSizes,
+                heroInd, 
+                buttonInd,
+                bigBlindSize,
+                PokerClient.PokerKing,
+                TableType.SixMax,
+                new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.PokerKing));
+
+            Console.WriteLine($"Created BotGameState successfully");
+        }
+
+        public void startNewHand()
+        {
+            _botGameState.startNewHand();
+        }
+
+        public void dealHoleCards(string card0, string card1)
+        {
+            _botGameState.dealHoleCards(new Card(card0), new Card(card1));
+        }
+
+        public void finishHand()
+        {
+            // _botGameState.finishHand(List<int> winnings);
+            _opponentModeling.addHand(_botGameState.getCurrentHand());
         }
 
         public void Dispose()

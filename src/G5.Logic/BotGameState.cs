@@ -46,9 +46,18 @@ namespace G5.Logic
             return (_buttonInd + 2) % _players.Count;
         }
 
-        public BotGameState(string[] playerNames, int heroIndex, int buttonInd, int bigBlingSize, int startStackSize,
-            PokerClient client, TableType tableType, Estimators.IActionEstimator actionEstimator)
+        public BotGameState(string[] playerNames,
+            int[] stackSizes,
+            int heroIndex, 
+            int buttonInd, 
+            int bigBlingSize, 
+            PokerClient client, 
+            TableType tableType, 
+            Estimators.IActionEstimator actionEstimator)
         {
+            if (playerNames.Count() != stackSizes.Count())
+                throw new Exception("Length of playerNames and stackSizes arrays must be the same");
+
             _actionEstimator = actionEstimator;
 
             _tableType = tableType;
@@ -61,8 +70,10 @@ namespace G5.Logic
             _heroInd = heroIndex;
             _buttonInd = buttonInd;
 
-            foreach (string playerName in playerNames)
-                _players.Add(new Player(playerName, startStackSize, null));
+            for (int i=0; i< playerNames.Count(); i++)
+            {
+                _players.Add(new Player(playerNames[i], stackSizes[i], null));
+            }
         }
 
         public void startNewHand()
@@ -71,7 +82,7 @@ namespace G5.Logic
             _numBets = 0;
             _numCallers = 0;
 
-            _actionEstimator?.newHand(this);
+            _actionEstimator.newHand(this);
 
             foreach (Player player in _players)
                 player.ResetHand();
@@ -450,7 +461,8 @@ namespace G5.Logic
             _numBets = 0;
             _numCallers = 0;
 
-            _actionEstimator?.newStreet(this);
+            if (_street == Street.Flop)
+                _actionEstimator.flopShown(getBoard(), getHeroHoleCards());
         }
 
         private void goToNextPlayer()
@@ -529,7 +541,7 @@ namespace G5.Logic
             if (ammountToCall >= getPlayerToAct().Stack)
             {
                 // Important that this is before player state changes (getPlayerToAct().GoesAllIn(...))
-                _actionEstimator?.newAction(ActionType.Call, this);
+                _actionEstimator.newAction(ActionType.Call, this);
 
                 ammountToCall = getPlayerToAct().Stack;
                 getPlayerToAct().GoesAllIn();
@@ -539,7 +551,7 @@ namespace G5.Logic
             else if (ammountToCall > 0) // Ima betova
             {
                 // Important that this is before player state changes (getPlayerToAct().Calls(...))
-                _actionEstimator?.newAction(ActionType.Call, this);
+                _actionEstimator.newAction(ActionType.Call, this);
 
                 getPlayerToAct().Calls(ammountToCall);
                 actionType = ActionType.Call;
@@ -548,7 +560,7 @@ namespace G5.Logic
             else
             {
                 // Important that this is before player state changes (getPlayerToAct().Checks())
-                _actionEstimator?.newAction(ActionType.Check, this);
+                _actionEstimator.newAction(ActionType.Check, this);
 
                 getPlayerToAct().Checks();
                 actionType = ActionType.Check;
@@ -580,7 +592,7 @@ namespace G5.Logic
             if (ammount >= getPlayerToAct().Stack)
             {
                 // Important that this is before player state changes (getPlayerToAct().GoesAllIn())
-                _actionEstimator?.newAction(betOrRaise, this);
+                _actionEstimator.newAction(betOrRaise, this);
 
                 ammount = getPlayerToAct().Stack;
                 getPlayerToAct().GoesAllIn();
@@ -589,7 +601,7 @@ namespace G5.Logic
             else
             {
                 // Important that this is before player state changes (getPlayerToAct().BetsOrRaisesTo(...))
-                _actionEstimator?.newAction(betOrRaise, this);
+                _actionEstimator.newAction(betOrRaise, this);
 
                 getPlayerToAct().BetsOrRaisesTo(getPlayerToAct().MoneyInPot + ammount);
                 actionType = betOrRaise;
@@ -626,13 +638,6 @@ namespace G5.Logic
 
         public BotDecision calculateHeroAction()
         {
-            if (_actionEstimator == null)
-            {
-                var msg = "calculateHeroAction: actionEstimator not set. Aborting.";
-                Console.WriteLine(msg);
-                throw new ArgumentException(msg);
-            }
-
             int nOfOpponents = numActivePlayers() - 1;
 
             Debug.Assert(_playerToActInd == _heroInd);
@@ -718,11 +723,7 @@ namespace G5.Logic
 
         public void Dispose()
         {
-            if (_actionEstimator != null)
-            {
-                _actionEstimator.Dispose();
-                _actionEstimator = null;
-            }
+            _actionEstimator.Dispose();
         }
     }
 }

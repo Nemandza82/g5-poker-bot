@@ -40,12 +40,12 @@ namespace G5.Acpc
             if (tableType == TableType.HeadsUp)
             {
                 _numPlayers = 2;
-                _opponentModeling = new OpponentModeling("full_stats_list_hu.bin", _bigBlindSize, tableType, opponentModelingOptions);
+                _opponentModeling = new OpponentModeling("full_stats_list_hu.bin", /*_bigBlindSize,*/ tableType, opponentModelingOptions);
             }
             else if (tableType == TableType.SixMax)
             {
                 _numPlayers = 6;
-                _opponentModeling = new OpponentModeling("full_stats_list_6max.bin", _bigBlindSize, tableType, opponentModelingOptions);
+                _opponentModeling = new OpponentModeling("full_stats_list_6max.bin", /*_bigBlindSize,*/ tableType, opponentModelingOptions);
             }
             else
             {
@@ -90,12 +90,16 @@ namespace G5.Acpc
             string[] playerNames6Max = { "Hero", "V1", "V2", "V3", "V4", "V5" };
             string[] playerNames = (_tableType == TableType.HeadsUp) ? playerNamesHU : playerNames6Max;
 
+            int[] stackSizesHU = { _startStackSize, _startStackSize };
+            int[] stackSizes6Max = { _startStackSize, _startStackSize, _startStackSize, _startStackSize, _startStackSize, _startStackSize };
+            int[] stackSizes = (_tableType == TableType.HeadsUp) ? stackSizesHU : stackSizes6Max;
+
             int buttonInd = (_heroInd - (acpcHeroPosition + 1) + _numPlayers) % _numPlayers;
             Console.WriteLine("Match started");
 
             var startTime = DateTime.Now;
 
-            _botGameState = new BotGameState(playerNames, _heroInd, buttonInd, _bigBlindSize, _startStackSize, PokerClient.Acpc, _tableType,
+            _botGameState = new BotGameState(playerNames, stackSizes, _heroInd, buttonInd, _bigBlindSize, PokerClient.Acpc, _tableType,
                 new Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.Acpc));
 
             var timeStr = timeToString(DateTime.Now - startTime);

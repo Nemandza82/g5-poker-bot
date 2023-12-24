@@ -11,7 +11,8 @@
         PartyPoker,
         PokerStars,
         G5,
-        Acpc
+        Acpc,
+        PokerKing
     }
 
     /// <summary>

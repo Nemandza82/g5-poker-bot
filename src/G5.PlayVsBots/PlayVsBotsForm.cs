@@ -38,8 +38,7 @@ namespace G5.PlayVsBots
             _tableType = (NUM_PLAYERS == 2) ? TableType.HeadsUp : TableType.SixMax;
             var statListFile = (NUM_PLAYERS == 2) ? "full_stats_list_hu.bin" : "full_stats_list_6max.bin";
 
-            _opponentModeling = new OpponentModeling(statListFile, _bigBlindSize, _tableType, _options);
-            var pokerClient = PokerClient.G5;
+            _opponentModeling = new OpponentModeling(statListFile, /*_bigBlindSize,*/ _tableType, _options);
 
             _gameTableControl.NextButtonPressed += buttonNext_Click;
             _gameTableControl.FoldButtonPressed += buttonFold_Click;
@@ -47,19 +46,22 @@ namespace G5.PlayVsBots
             _gameTableControl.RaiseButtonPressed += buttonBetRaise_Click;
 
             _heroInd = 0;
+            _startStackSize = _bigBlindSize * 100;
 
             String[] playerNames = new string[NUM_PLAYERS];
+            int[] stackSizes = new int[NUM_PLAYERS];
             playerNames[0] = "Player";
 
             for (int i = 1; i < NUM_PLAYERS; i++)
+            {
                 playerNames[i] = "Bot" + i.ToString();
-
-            _startStackSize = _bigBlindSize * 100;
+                stackSizes[i] = _startStackSize;
+            }
 
             for (int i = 0; i < NUM_PLAYERS; i++)
             {
-                _botGameStates[i] = new BotGameState(playerNames, i, 0, _bigBlindSize, _startStackSize,
-                    pokerClient, _tableType, new Logic.Estimators.ModelingEstimator(_opponentModeling, pokerClient));
+                _botGameStates[i] = new BotGameState(playerNames, stackSizes, i, 0, _bigBlindSize, PokerClient.G5, _tableType,
+                    new Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.G5));
             }
 
             _totalInvestedMoney = _startStackSize;

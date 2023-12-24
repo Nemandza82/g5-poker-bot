@@ -67,7 +67,6 @@ namespace G5.Logic
         };
 
         private Options _options;
-        public int Limit { get; private set; }
         public TableType TableType { get; private set; }
 
         private Random _random = new Random();
@@ -85,29 +84,12 @@ namespace G5.Logic
             get { return _fullStatsList; }
         }
         
-        public OpponentModeling(string fullStatListFileName, int limit, TableType tableType, Options options)
+        public OpponentModeling(string fullStatListFileName, TableType tableType, Options options)
         {
             _options = options;
-            Limit = limit;
             TableType = tableType;
 
             _fullStatsList = PlayerStats.loadStatsList(fullStatListFileName);
-            _recentHandsList = new Dictionary<PlayerKey, List<Hand>>();
-
-            initBaseStats();
-        }
-
-        /// <summary>
-        /// Creates OpponentModeling class for given limit and estimates base prior distributions (VPIP, aggression, pfr...).
-        /// </summary>
-        /// <param name="limit">Play limit for which we are modeling player (micro...).</param>
-        public OpponentModeling(List<PlayerStats> statList, int limit, TableType tableType, Options options)
-        {
-            _options = options;
-            Limit = limit;
-            TableType = tableType;
-
-            _fullStatsList = statList;
             _recentHandsList = new Dictionary<PlayerKey, List<Hand>>();
 
             initBaseStats();

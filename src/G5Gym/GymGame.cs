@@ -51,7 +51,10 @@ namespace G5Gym
                 Console.WriteLine($"Player {i} is controlled by gym {controlPlayer[i]}");
 
                 Console.WriteLine($"Loading _opponentModeling for player {i}");
-                _opponentModeling = controlPlayer[i] ? new OpponentModeling("full_stats_list_hu.bin", _bigBlindSize, tableType, oppModelingOptions) : null;
+                _opponentModeling = controlPlayer[i] ? new OpponentModeling("full_stats_list_hu.bin", 
+                    // _bigBlindSize,
+                    tableType,
+                    oppModelingOptions) : null;
                 
                 Console.WriteLine("OpponentModeling loaded successfully");
 
@@ -59,7 +62,9 @@ namespace G5Gym
                 var estimator = controlPlayer[i] ? new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.G5) : null;
 
                 Console.WriteLine("Creating bot game state");
-                _botGameStates[i] = new BotGameState(playerNames, i, 0, _bigBlindSize, _startStackSize, PokerClient.G5, tableType, estimator);
+
+                int[] stackSizesHU = { _startStackSize, _startStackSize };
+                _botGameStates[i] = new BotGameState(playerNames, stackSizesHU, i, 0, _bigBlindSize, PokerClient.G5, tableType, estimator);
             }
         }
 

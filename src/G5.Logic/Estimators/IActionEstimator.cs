@@ -19,7 +19,7 @@ namespace G5.Logic.Estimators
         /// <summary>
         /// Tell estimator that new street hapenned so it can react (Eg re estimate sub-game).
         /// </summary>
-        void newStreet(BotGameState gameState);
+        void flopShown(Board board, HoleCards holeCards);
 
         /// <summary>
         /// Tell estimator that new hand hapenned so it can react (Eg update player models).

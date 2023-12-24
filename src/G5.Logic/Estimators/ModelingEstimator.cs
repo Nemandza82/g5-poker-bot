@@ -106,18 +106,17 @@ namespace G5.Logic.Estimators
                 checkCallProb, _dmContext);
         }
 
-        void IActionEstimator.newStreet(BotGameState gameState)
+        void IActionEstimator.flopShown(Board board, HoleCards holeCards)
         {
-            if (gameState.getStreet() == Street.Flop)
-                DecisionMakingDll.GameContext_NewFlop(_dmContext, gameState.getBoard(), gameState.getHeroHoleCards());
+            DecisionMakingDll.GameContext_NewFlop(_dmContext, board, holeCards);
         }
 
         void IActionEstimator.newHand(BotGameState gameState)
         {
             Parallel.ForEach(gameState.getPlayers(), (player) =>
             {
-                if (_opponentModeling != null)
-                    player.UpdateModel(_opponentModeling.estimatePlayerModel(player.Name, _pokerClient));
+                // Update player model for each player using recend hand history
+                player.Model = _opponentModeling.estimatePlayerModel(player.Name, _pokerClient);
             });
 
             /*foreach (Player player in _players)
