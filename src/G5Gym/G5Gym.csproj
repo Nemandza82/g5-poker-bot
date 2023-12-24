@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
 
@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy &quot;$(SolutionDir)..\redist\*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDit)test.py&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\test.py&quot;" />
+      <Exec Command="copy &quot;$(SolutionDir)..\redist\*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDit)g5api.py&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\&quot;" />
     </Target>
 
 </Project>

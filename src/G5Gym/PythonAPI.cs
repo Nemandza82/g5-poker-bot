@@ -1,7 +1,9 @@
 ﻿using G5.Logic;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,15 +19,23 @@ namespace G5Gym
         public PythonAPI(int numPlayers, int bigBlindSize)
         {
             var opponentModelingOptions = new OpponentModeling.Options();
-            opponentModelingOptions.recentHandsCount = 1000;
+            opponentModelingOptions.recentHandsCount = 50;
+
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             if (numPlayers == 2)
             {
-                _opponentModeling = new OpponentModeling("full_stats_list_hu.bin", bigBlindSize, TableType.HeadsUp, opponentModelingOptions);
+                _opponentModeling = new OpponentModeling(assemblyFolder + "/full_stats_list_hu.bin", 
+                    bigBlindSize, 
+                    TableType.HeadsUp, 
+                    opponentModelingOptions);
             }
             else if (numPlayers > 2 && numPlayers <= 6)
             {
-                _opponentModeling = new OpponentModeling("full_stats_list_6max.bin", bigBlindSize, TableType.SixMax, opponentModelingOptions);
+                _opponentModeling = new OpponentModeling(assemblyFolder + "/full_stats_list_6max.bin", 
+                    bigBlindSize, 
+                    TableType.SixMax, 
+                    opponentModelingOptions);
             }
             else
             {
