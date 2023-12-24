@@ -3,7 +3,7 @@
 #include "Range.h"
 #include "HoleCards.h"
 #include "SortedHoleCards.h"
-
+#include <string>
 
 namespace G5Cpp
 {
@@ -17,7 +17,7 @@ namespace G5Cpp
         /**
          * Loads PreFlopEquity-es from hard disk.
          */
-        static void load();
+        static void load(std::string binPath);
 
         /**
          * Calculates PreFlopEquity of particular HoleCards against an input Range.

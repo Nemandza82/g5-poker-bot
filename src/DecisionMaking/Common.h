@@ -11,10 +11,6 @@
 
 namespace G5Cpp
 {
-    extern "C" G5_EXPORT int __stdcall getInt();
-    extern "C" G5_EXPORT void* __stdcall CreateGameContext();
-    extern "C" G5_EXPORT void __stdcall ReleaseGameContext(void* gc);
-
     const int N_HOLECARDS_DOUBLE = 51 * 52 + 52;
     const int N_HOLECARDS = 52 * 51 / 2;
     const int N_HOLECARDS_FLOP = 49 * 48 / 2;

@@ -15,9 +15,10 @@ extern "C"
         return 5;
     }
 
-    G5_EXPORT void* __stdcall CreateGameContext()
+    // binPath - Path where dll-s and other binaries are stored. Where to load PreFlopEquities.txt and similar files from.
+    G5_EXPORT void* __stdcall CreateGameContext(const char* binPath)
     {
-        return new GameContext();
+        return new GameContext(binPath);
     }
 
     G5_EXPORT void __stdcall ReleaseGameContext(void* gc)

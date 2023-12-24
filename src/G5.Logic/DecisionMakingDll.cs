@@ -162,7 +162,7 @@ namespace G5.Logic
 
 
         [DllImport("DecisionMaking.dll", EntryPoint = "CreateGameContext", CharSet = CharSet.Ansi)]
-        public static extern IntPtr CreateGameContext();
+        public static extern IntPtr CreateGameContext(string binPath);
 
 
         [DllImport("DecisionMaking.dll", EntryPoint = "ReleaseGameContext", CharSet = CharSet.Ansi)]

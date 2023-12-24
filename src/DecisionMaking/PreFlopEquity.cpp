@@ -3,6 +3,7 @@
 #include "HoleCards.h"
 #include <stdio.h>
 #include <string>
+#include <stdexcept>
 
 
 namespace G5Cpp
@@ -12,11 +13,11 @@ namespace G5Cpp
     bool PreFlopEquity::_dataLoaded = false;
     float PreFlopEquity::_pfeData[N_HOLECARDS_DOUBLE][N_HOLECARDS_DOUBLE];
 
-    void PreFlopEquity::load()
+    void PreFlopEquity::load(std::string binPath)
     {
         if (!_dataLoaded)
         {
-            FILE* file = fopen("PreFlopEquities.txt", "r");
+            FILE* file = fopen((binPath + "/PreFlopEquities.txt").c_str(), "r");
 
             for (int i = 0; i < N_HOLECARDS_DOUBLE; i++)
             {
@@ -152,7 +153,8 @@ namespace G5Cpp
 
     float PreFlopEquity::calculate(const HoleCards& heroHoleCards, const Range& range)
     {
-        load();
+        if (!_dataLoaded)
+            throw std::runtime_error("PreFlopEquities not loaded");
 
         float* heroPFE = &_pfeData[heroHoleCards.toInt()][0];
         
@@ -174,7 +176,8 @@ namespace G5Cpp
 
     void PreFlopEquity::getSortedHoleCards(SortedHoleCards& rangeData)
     {
-        load();
+        if (!_dataLoaded)
+            throw std::runtime_error("PreFlopEquities not loaded");
 
         EquitySortPair equityList[N_HOLECARDS];
         sortPreFlopEquities(equityList, _pfeData, BORDER_EQUITY);

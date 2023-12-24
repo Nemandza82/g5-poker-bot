@@ -3,6 +3,7 @@
 #include "HoleCards.h"
 #include "AllHandStrengths.h"
 #include "Board.h"
+#include <string>
 
 
 namespace G5Cpp
@@ -24,7 +25,7 @@ namespace G5Cpp
 
     public:
 
-        GameContext();
+        GameContext(std::string binPath);
 
         void assertBoard(const Board& board) const;
         void newFlop(const Card* flop, const HoleCards* hc);

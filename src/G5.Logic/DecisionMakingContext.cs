@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 
 namespace G5.Logic
@@ -22,7 +24,9 @@ namespace G5.Logic
 
         public DecisionMakingContext()
         {
-            _gc = DecisionMakingDll.CreateGameContext();
+            // Load binaries from current folder 
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            _gc = DecisionMakingDll.CreateGameContext(assemblyFolder);
         }
 
         public void Dispose()

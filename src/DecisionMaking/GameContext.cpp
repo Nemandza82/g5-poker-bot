@@ -513,8 +513,11 @@ namespace G5Cpp
         }
     }
 
-    GameContext::GameContext()
+    GameContext::GameContext(std::string binPath)
     {
+        // Load PreFlopEquities.txt file, where pre flop equities are stored.
+        PreFlopEquity::load(binPath);
+
         _sortedPreFlop.setLength(N_HOLECARDS);
         PreFlopEquity::getSortedHoleCards(_sortedPreFlop);
     }
