@@ -9,4 +9,8 @@
       <ProjectReference Include="..\G5.Logic\G5.Logic.csproj" />
     </ItemGroup>
 
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy &quot;$(SolutionDir)..\redist\*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDit)test.py&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\test.py&quot;" />
+    </Target>
+
 </Project>
