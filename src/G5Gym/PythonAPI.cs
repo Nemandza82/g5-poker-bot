@@ -12,7 +12,7 @@ namespace G5Gym
     public class PythonAPI : IDisposable
     {
         private OpponentModeling _opponentModeling;
-        private BotGameState? _botGameState;
+        private BotGameState? _botGameState; 
 
         public PythonAPI(int numPlayers, int bigBlindSize)
         {
@@ -32,6 +32,7 @@ namespace G5Gym
                 throw new InvalidOperationException("Not supported table type");
             }
 
+            Console.WriteLine("Created opponent modelling successfully");
             _botGameState = null;
         }
 
