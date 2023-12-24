@@ -10,7 +10,6 @@ namespace G5.Acpc
 {
     class AcpcGame : IDisposable
     {
-        private OpponentModeling.Options _options;
         private OpponentModeling _opponentModeling;
         private BotGameState _botGameState;
         private MatchState _prevMatchState;
@@ -33,20 +32,20 @@ namespace G5.Acpc
             _startStackSize = 200 * _bigBlindSize;
             _totalSaldo = 0;
 
-            _options = new OpponentModeling.Options();
-            _options.recentHandsCount = 1000;
+            var opponentModelingOptions = new OpponentModeling.Options();
+            opponentModelingOptions.recentHandsCount = 1000;
 
             var startTime = DateTime.Now;
 
             if (tableType == TableType.HeadsUp)
             {
                 _numPlayers = 2;
-                _opponentModeling = new OpponentModeling("full_stats_list_hu.bin", _bigBlindSize, tableType, _options);
+                _opponentModeling = new OpponentModeling("full_stats_list_hu.bin", _bigBlindSize, tableType, opponentModelingOptions);
             }
             else if (tableType == TableType.SixMax)
             {
                 _numPlayers = 6;
-                _opponentModeling = new OpponentModeling("full_stats_list_6max.bin", _bigBlindSize, tableType, _options);
+                _opponentModeling = new OpponentModeling("full_stats_list_6max.bin", _bigBlindSize, tableType, opponentModelingOptions);
             }
             else
             {
