@@ -70,6 +70,16 @@ namespace G5Gym
             Console.WriteLine($"Created BotGameState successfully");
         }
 
+        public int getPlayerToActInd()
+        {
+            return _botGameState.getPlayerToActInd();
+        }
+
+        public dynamic getHandState()
+        {
+            return _botGameState.getCurrentHand();
+        }
+
         public void startNewHand()
         {
             _botGameState.startNewHand();

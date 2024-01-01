@@ -114,19 +114,15 @@ namespace G5.Logic
         private List<Hand> getRecentHandList(string playerName, PokerClient client)
         {
             var playerKey = new PlayerKey { PlayerName = playerName, Client = client };
-            List<Hand> handList = new List<Hand>();
-
+            
             if (_recentHandsList.ContainsKey(playerKey))
             {
-                handList = _recentHandsList[playerKey];
+                return _recentHandsList[playerKey];
             }
             else
             {
-                _recentHandsList.Add(playerKey, handList);
+                return null;
             }
-
-            Debug.Assert(handList.Count <= _options.recentHandsCount);
-            return handList;
         }
 
         /**
@@ -171,7 +167,7 @@ namespace G5.Logic
 
         public PlayerModel estimatePlayerModel(string playerName, PokerClient client)
         {
-            List<Hand> handList = getRecentHandList(playerName, client);
+            var handList = getRecentHandList(playerName, client);
             var playerStats = PlayerStats.createStatsFromHandList(handList, playerName, client, TableType);
             return estimatePlayerModel(playerStats);
         }
@@ -196,9 +192,19 @@ namespace G5.Logic
                 playerStats.increment(hand);
 
                 // updating _recentHandsList
-                var handList = getRecentHandList(playerName, hand.Client);
+                var playerKey = new PlayerKey { PlayerName = playerName, Client = hand.Client };
+                var handList = new List<Hand>();
 
-                if (handList.Count == _options.recentHandsCount)
+                if (_recentHandsList.ContainsKey(playerKey))
+                {
+                    handList = _recentHandsList[playerKey];
+                }
+                else
+                {
+                    _recentHandsList.Add(playerKey, handList);
+                }
+                
+                while (handList.Count >= _options.recentHandsCount)
                     handList.RemoveAt(0);
 
                 handList.Add(hand);

@@ -212,6 +212,9 @@ namespace G5.Logic
         {
             var playerStats = new PlayerStats(playerName, client, tableType);
 
+            if (handList == null)
+                return playerStats;
+
             foreach (var hand in handList)
                 playerStats.increment(hand);
 
