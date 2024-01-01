@@ -123,7 +123,16 @@ namespace G5Gym
 
         public dynamic calculateHeroAction()
         {
-            return _botGameState.calculateHeroAction();
+            var bd = _botGameState.calculateHeroAction();
+
+            return new {
+                actionType = bd.actionType,
+                byAmmount = bd.byAmmount,
+                checkCallEV = bd.checkCallEV,
+                betRaiseEV = bd.betRaiseEV,
+                timeSpentSeconds = bd.timeSpentSeconds,
+                message = bd.message
+            };
         }
 
         public void finishHand()
