@@ -88,7 +88,8 @@
         Raise,
         AllIn,
         Wins,
-        MoneyReturned
+        MoneyReturned,
+        NoAction
     };
 
     public enum OmahaPreFlopStyle

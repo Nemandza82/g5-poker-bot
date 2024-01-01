@@ -536,7 +536,7 @@ namespace G5.Logic
         public ActionType playerCheckCalls()
         {
             int ammountToCall = getAmountToCall();
-            ActionType actionType = ActionType.Check;
+            ActionType actionType;
 
             if (ammountToCall >= getPlayerToAct().Stack)
             {
@@ -634,14 +634,12 @@ namespace G5.Logic
             public float checkCallEV;
             public float betRaiseEV;
             public double timeSpentSeconds;
+            public string message;
         }
 
         public BotDecision calculateHeroAction()
         {
             int nOfOpponents = numActivePlayers() - 1;
-
-            Debug.Assert(_playerToActInd == _heroInd);
-            Debug.Assert(nOfOpponents > 0);
 
             BotDecision bd = new BotDecision
             {
@@ -652,9 +650,24 @@ namespace G5.Logic
                 timeSpentSeconds = 0
             };
 
+            if (_playerToActInd != _heroInd)
+            {
+                bd.actionType = ActionType.NoAction;
+                bd.message = "Player to act is not hero";
+                return bd;
+            }
+
+            if (nOfOpponents == 0)
+            {
+                bd.message = "Number of opponents is 0";
+                bd.actionType = ActionType.Check;
+                return bd;
+            }
+
             var startTime = DateTime.Now;
             int ammountToCall = getAmountToCall();
 
+            // If we are post flop with many opponents than its too time consumming to calculate.
             if (nOfOpponents < 4 || _street == Street.PreFlop)
             {
                 _actionEstimator.estimateEV(out bd.checkCallEV, out bd.betRaiseEV, this);
@@ -673,20 +686,28 @@ namespace G5.Logic
             // If both EVs are less than zero then fold
             if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
             {
-                if (_street > Street.PreFlop)
-                    Debug.Assert(_numBets > 0);
-
-                bd.actionType = ActionType.Fold;
+                if (ammountToCall == 0)
+                {
+                    bd.message = "Both EVs are less then 0, but ammountToCall is 0 so check.";
+                    bd.actionType = ActionType.Check;
+                }
+                else
+                {
+                    bd.message = "Both EVs are less then 0, and ammountToCall is >0 so fold.";
+                    bd.actionType = ActionType.Fold;
+                }
             }
             else
             {
                 if (ammountToCall >= _players[_heroInd].Stack)
                 {
+                    bd.message = "EV for call or raise is >= 0 and ammountToCall is > than player stack so call.";
                     bd.byAmmount = _players[_heroInd].Stack;
                     bd.actionType = ActionType.Call;
                 }
                 else if (bd.betRaiseEV < 0)
                 {
+                    bd.message = "EV for raise is < 0 and EV for call is >= 0 so call.";
                     bd.byAmmount = ammountToCall;
                     bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
                 }
@@ -697,12 +718,18 @@ namespace G5.Logic
 
                     if ((3 * bd.byAmmount / 2) >= getPlayerToAct().Stack)
                     {
+                        bd.message = "Raise EV is positive and larger than call EV, but raise ammount is close to player stack so go all in.";
                         bd.byAmmount = getPlayerToAct().Stack;
                         bd.actionType = ActionType.AllIn;
+                    }
+                    else
+                    {
+                        bd.message = "Raise EV is positive and larger than call EV so raise.";
                     }
                 }
                 else
                 {
+                    bd.message = "Call EV is positive and larger than raise EV so check/call.";
                     bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
                     bd.byAmmount = ammountToCall;
                 }

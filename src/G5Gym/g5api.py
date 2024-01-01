@@ -8,7 +8,7 @@ clr.AddReference("G5Gym")
 
 from G5Gym import PythonAPI
 
-g5pythonApi = PythonAPI(numPlayers=6, bigBlindSize=4)
+g5pythonApi = PythonAPI(numPlayers=6)
 
 print(g5pythonApi.testCallStruct())
 

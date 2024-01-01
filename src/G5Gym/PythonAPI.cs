@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static G5.Logic.BotGameState;
 
 
 
@@ -77,6 +78,42 @@ namespace G5Gym
         public void dealHoleCards(string card0, string card1)
         {
             _botGameState.dealHoleCards(new Card(card0), new Card(card1));
+        }
+
+        public void goToFlop(string card0, string card1, string card2)
+        {
+            List<Card> cards = [new Card(card0), new Card(card1), new Card(card2)];
+            _botGameState.goToNextStreet(cards);
+        }
+
+        public void goToTurn(string card)
+        {
+            _botGameState.goToNextStreet(new Card(card));
+        }
+
+        public void goToRiver(string card)
+        {
+            _botGameState.goToNextStreet(new Card(card));
+        }
+
+        public void playerCheckCalls()
+        {
+            _botGameState.playerCheckCalls();
+        }
+
+        public void playerBetRaisesBy(int ammount)
+        {
+            _botGameState.playerBetRaisesBy(ammount);
+        }
+
+        public void playerFolds()
+        {
+            _botGameState.playerFolds();
+        }
+
+        public dynamic calculateHeroAction()
+        {
+            return _botGameState.calculateHeroAction();
         }
 
         public void finishHand()
