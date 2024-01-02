@@ -75,9 +75,9 @@ namespace G5Gym
             return _botGameStates[gameName].getPlayerToActInd();
         }
 
-        public dynamic getHandState(string gameName)
+        public dynamic getStackSize(string gameName, int playerIndex)
         {
-            return _botGameStates[gameName].getCurrentHand();
+            return _botGameStates[gameName].getPlayers()[playerIndex].Stack;
         }
 
         public void setStackSize(string gameName, int playerIndex, int stackSize)
@@ -85,13 +85,29 @@ namespace G5Gym
             _botGameStates[gameName].getPlayers()[playerIndex].SetStackSize(stackSize);
         }
 
+        public dynamic getPlayerName(string gameName, int playerIndex)
+        {
+            return _botGameStates[gameName].getPlayers()[playerIndex].Name;
+        }
+
         public void setPlayerName(string gameName, int playerIndex, string playerName)
         {
             _botGameStates[gameName].getPlayers()[playerIndex].SetPlayerName(playerName);
         }
 
-        public void startNewHand(string gameName)
+        public dynamic getBoard(string gameName)
         {
+            return _botGameStates[gameName].getBoard();
+        }
+
+        public dynamic getButtonInd(string gameName)
+        {
+            return _botGameStates[gameName].getButtonInd();
+        }
+
+        public void startNewHand(string gameName, int buttonInd)
+        {
+            _botGameStates[gameName].setButtonInd(buttonInd);
             _botGameStates[gameName].startNewHand();
         }
 

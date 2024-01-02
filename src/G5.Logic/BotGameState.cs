@@ -26,7 +26,7 @@ namespace G5.Logic
         private int _playerToActInd;
         private int _heroInd;
         private int _buttonInd;
-        private Street _street;
+        private Street _street = Street.PreFlop;
         private int _numBets;
         private int _numCallers;
 
