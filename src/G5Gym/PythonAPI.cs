@@ -15,7 +15,7 @@ namespace G5Gym
     public class PythonAPI : IDisposable
     {
         private OpponentModeling _opponentModeling;
-        private BotGameState? _botGameState; 
+        private Dictionary<string, BotGameState> _botGameStates = new Dictionary<string, BotGameState>();
 
         public PythonAPI(int numPlayers)
         {
@@ -42,7 +42,6 @@ namespace G5Gym
             }
 
             Console.WriteLine("Created opponent modelling successfully");
-            _botGameState = null;
         }
 
         public dynamic testCallArray()
@@ -56,9 +55,9 @@ namespace G5Gym
         }
 
         // bigBlindSize int in cents. Eg. $0.04 is 4.
-        public void createGame(string[] playerNames, int[] stackSizes, int heroInd, int buttonInd, int bigBlindSize)
+        public dynamic createGame(string gameName, string[] playerNames, int[] stackSizes, int heroInd, int buttonInd, int bigBlindSize)
         {
-            _botGameState = new BotGameState(playerNames, 
+            _botGameStates[gameName] = new BotGameState(playerNames, 
                 stackSizes,
                 heroInd, 
                 buttonInd,
@@ -67,63 +66,74 @@ namespace G5Gym
                 TableType.SixMax,
                 new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.PokerKing));
 
-            Console.WriteLine($"Created BotGameState successfully");
+            Console.WriteLine($"Created {gameName} BotGameState successfully");
+            return gameName;
         }
 
-        public int getPlayerToActInd()
+        public int getPlayerToActInd(string gameName)
         {
-            return _botGameState.getPlayerToActInd();
+            return _botGameStates[gameName].getPlayerToActInd();
         }
 
-        public dynamic getHandState()
+        public dynamic getHandState(string gameName)
         {
-            return _botGameState.getCurrentHand();
+            return _botGameStates[gameName].getCurrentHand();
         }
 
-        public void startNewHand()
+        public void setStackSize(string gameName, int playerIndex, int stackSize)
         {
-            _botGameState.startNewHand();
+            _botGameStates[gameName].getPlayers()[playerIndex].SetStackSize(stackSize);
         }
 
-        public void dealHoleCards(string card0, string card1)
+        public void setPlayerName(string gameName, int playerIndex, string playerName)
         {
-            _botGameState.dealHoleCards(new Card(card0), new Card(card1));
+            _botGameStates[gameName].getPlayers()[playerIndex].SetPlayerName(playerName);
         }
 
-        public void goToFlop(string card0, string card1, string card2)
+        public void startNewHand(string gameName)
+        {
+            _botGameStates[gameName].startNewHand();
+        }
+
+        public void dealHoleCards(string gameName, string card0, string card1)
+        {
+            _botGameStates[gameName].dealHoleCards(new Card(card0), new Card(card1));
+        }
+
+        public void goToFlop(string gameName, string card0, string card1, string card2)
         {
             List<Card> cards = [new Card(card0), new Card(card1), new Card(card2)];
-            _botGameState.goToNextStreet(cards);
+            _botGameStates[gameName].goToNextStreet(cards);
         }
 
-        public void goToTurn(string card)
+        public void goToTurn(string gameName, string card)
         {
-            _botGameState.goToNextStreet(new Card(card));
+            _botGameStates[gameName].goToNextStreet(new Card(card));
         }
 
-        public void goToRiver(string card)
+        public void goToRiver(string gameName, string card)
         {
-            _botGameState.goToNextStreet(new Card(card));
+            _botGameStates[gameName].goToNextStreet(new Card(card));
         }
 
-        public void playerCheckCalls()
+        public void playerCheckCalls(string gameName)
         {
-            _botGameState.playerCheckCalls();
+            _botGameStates[gameName].playerCheckCalls();
         }
 
-        public void playerBetRaisesBy(int ammount)
+        public void playerBetRaisesBy(string gameName, int ammount)
         {
-            _botGameState.playerBetRaisesBy(ammount);
+            _botGameStates[gameName].playerBetRaisesBy(ammount);
         }
 
-        public void playerFolds()
+        public void playerFolds(string gameName)
         {
-            _botGameState.playerFolds();
+            _botGameStates[gameName].playerFolds();
         }
 
-        public dynamic calculateHeroAction()
+        public dynamic calculateHeroAction(string gameName)
         {
-            var bd = _botGameState.calculateHeroAction();
+            var bd = _botGameStates[gameName].calculateHeroAction();
 
             return new {
                 actionType = bd.actionType,
@@ -135,16 +145,18 @@ namespace G5Gym
             };
         }
 
-        public void finishHand()
+        public void finishHand(string gameName)
         {
             // _botGameState.finishHand(List<int> winnings);
-            _opponentModeling.addHand(_botGameState.getCurrentHand());
+            _opponentModeling.addHand(_botGameStates[gameName].getCurrentHand());
         }
 
         public void Dispose()
         {
-            if (_botGameState != null)
-                _botGameState.Dispose();
+            foreach (var botGameState in _botGameStates)
+            {
+                botGameState.Value.Dispose();
+            }
         }
     }
 }

@@ -55,6 +55,11 @@ namespace G5.Logic
             Stack = size;
         }
 
+        public void SetPlayerName(string name)
+        {
+            Name = name;
+        }
+
         public void BringsIn(int amount)
         {
             Stack += amount;

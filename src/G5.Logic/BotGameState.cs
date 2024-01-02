@@ -192,6 +192,11 @@ namespace G5.Logic
             return _buttonInd;
         }
 
+        public void setButtonInd(int index)
+        {
+            _buttonInd = index;
+        }
+
         public List<Player> getPlayers()
         {
             return _players;
