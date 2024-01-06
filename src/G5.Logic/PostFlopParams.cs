@@ -102,6 +102,12 @@ namespace G5.Logic
             prevActionMod = (PrevAction == ActionType.Call) ? 1 : prevActionMod;
             prevActionMod = (PrevAction == ActionType.Check) ? 2 : prevActionMod;
 
+            if (prevActionMod == -1)
+            {
+                Console.WriteLine($"Warninig!: prevActionMod is -1, prevAction: {prevActionMod}");
+                prevActionMod = 0;
+            }
+
             if (TableType == TableType.HeadsUp)
             {
                 Debug.Assert(Street == Street.Flop || Street == Street.Turn || Street == Street.River);
@@ -132,27 +138,30 @@ namespace G5.Logic
             else
             {
                 int a0 = -1;
-                int a1 = -1;
-                int a3 = -1;
-                int a4 = -1;
-                int a5 = -1;
 
                 a0 = (Street == Street.Flop) ? 0 : a0;
                 a0 = (Street == Street.Turn) ? 1 : a0;
                 a0 = (Street == Street.River) ? 2 : a0;
 
-                a1 = (Round == 0) ? 0 : 1;
+                if (a0 == -1)
+                {
+                    Console.WriteLine($"Warninig!: a0 is -1, Street: {Street}");
+                    a0 = 0;
+                }
 
-                a3 = (NumBets == 0) ? 0 : a3;
+                int a1 = (Round == 0) ? 0 : 1;
+
+                var a3 = 0;
+                a3 = (NumBets <= 0) ? 0 : a3;
                 a3 = (NumBets == 1) ? 1 : a3;
                 a3 = (NumBets >= 2) ? 2 : a3;
 
-                a4 = (InPosition) ? 1 : 0;
+                int a4 = InPosition ? 1 : 0;
 
-                a5 = (NumPlayers == 2) ? 0 : a5;
+                var a5 = 0;
+                a5 = (NumPlayers <= 2) ? 0 : a5;
                 a5 = (NumPlayers >= 3) ? 1 : a5;
 
-                Debug.Assert((a0 != -1) && (a1 != -1) && (prevActionMod != -1) && (a3 != -1) && (a4 != -1) && (a5 != -1));
                 index = a5 + (2 * a4) + (4 * a3) + (12 * prevActionMod) + (36 * a1) + (72 * a0);
             }
 

@@ -240,7 +240,7 @@ namespace G5Gym
             Console.WriteLine($"Gym: Playing controled player: {playerToAct}; Calculating action.");
 
             var bd = _botGameStates[playerToAct].calculateHeroAction();
-            return playerActs(bd.actionType, bd.byAmmount, false);
+            return playerActs(bd.actionType, bd.byAmount, false);
         }
 
         public dynamic playerActs(ActionType actionType, int byAmmount, bool isFakeAction)

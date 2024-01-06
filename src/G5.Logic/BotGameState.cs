@@ -521,7 +521,7 @@ namespace G5.Logic
             return true;
         }
 
-        public ActionType playerActs(ActionType actionType, int byAmmount)
+        public ActionType playerActs(ActionType actionType, int byAmount)
         {
             if (actionType == ActionType.Fold)
             {
@@ -534,7 +534,7 @@ namespace G5.Logic
             }
             else
             {
-                return playerBetRaisesBy(byAmmount);
+                return playerBetRaisesBy(byAmount);
             }
         }
 
@@ -635,7 +635,7 @@ namespace G5.Logic
         public struct BotDecision
         {
             public ActionType actionType;
-            public int byAmmount;
+            public int byAmount;
             public float checkCallEV;
             public float betRaiseEV;
             public double timeSpentSeconds;
@@ -649,7 +649,7 @@ namespace G5.Logic
             BotDecision bd = new BotDecision
             {
                 actionType = ActionType.Fold,
-                byAmmount = 0,
+                byAmount = 0,
                 betRaiseEV = 0.0f,
                 checkCallEV = 0.0f,
                 timeSpentSeconds = 0
@@ -686,7 +686,7 @@ namespace G5.Logic
 
             bd.timeSpentSeconds = (DateTime.Now - startTime).TotalSeconds;
             bd.actionType = ActionType.Fold;
-            bd.byAmmount = 0;
+            bd.byAmount = 0;
 
             // If both EVs are less than zero then fold
             if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
@@ -707,24 +707,24 @@ namespace G5.Logic
                 if (ammountToCall >= _players[_heroInd].Stack)
                 {
                     bd.message = "EV for call or raise is >= 0 and ammountToCall is > than player stack so call.";
-                    bd.byAmmount = _players[_heroInd].Stack;
+                    bd.byAmount = _players[_heroInd].Stack;
                     bd.actionType = ActionType.Call;
                 }
                 else if (bd.betRaiseEV < 0)
                 {
                     bd.message = "EV for raise is < 0 and EV for call is >= 0 so call.";
-                    bd.byAmmount = ammountToCall;
+                    bd.byAmount = ammountToCall;
                     bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
                 }
                 else if (bd.betRaiseEV > bd.checkCallEV)
                 {
                     bd.actionType = ActionType.Raise;
-                    bd.byAmmount = getRaiseAmmount();
+                    bd.byAmount = getRaiseAmmount();
 
-                    if ((3 * bd.byAmmount / 2) >= getPlayerToAct().Stack)
+                    if ((3 * bd.byAmount / 2) >= getPlayerToAct().Stack)
                     {
                         bd.message = "Raise EV is positive and larger than call EV, but raise ammount is close to player stack so go all in.";
-                        bd.byAmmount = getPlayerToAct().Stack;
+                        bd.byAmount = getPlayerToAct().Stack;
                         bd.actionType = ActionType.AllIn;
                     }
                     else
@@ -736,7 +736,7 @@ namespace G5.Logic
                 {
                     bd.message = "Call EV is positive and larger than raise EV so check/call.";
                     bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
-                    bd.byAmmount = ammountToCall;
+                    bd.byAmount = ammountToCall;
                 }
 
                 /* // Random actions

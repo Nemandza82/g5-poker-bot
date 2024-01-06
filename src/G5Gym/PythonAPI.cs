@@ -75,34 +75,103 @@ namespace G5Gym
             return _botGameStates[gameName].getPlayerToActInd();
         }
 
+        public int getAmountToCall(string gameName)
+        {
+            return _botGameStates[gameName].getAmountToCall();
+        }
+
         public dynamic getStackSize(string gameName, int playerIndex)
         {
-            return _botGameStates[gameName].getPlayers()[playerIndex].Stack;
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return 0;
+
+            return players[playerIndex].Stack;
         }
 
         public void setStackSize(string gameName, int playerIndex, int stackSize)
         {
-            _botGameStates[gameName].getPlayers()[playerIndex].SetStackSize(stackSize);
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return;
+
+            players[playerIndex].SetStackSize(stackSize);
+        }
+
+        public dynamic getStakesSize(string gameName, int playerIndex)
+        {
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return 0;
+
+            return players[playerIndex].MoneyInPot;
         }
 
         public dynamic getPlayerName(string gameName, int playerIndex)
         {
-            return _botGameStates[gameName].getPlayers()[playerIndex].Name;
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return "Unknows player index";
+
+            return players[playerIndex].Name;
         }
 
         public void setPlayerName(string gameName, int playerIndex, string playerName)
         {
-            _botGameStates[gameName].getPlayers()[playerIndex].SetPlayerName(playerName);
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return;
+
+            players[playerIndex].SetPlayerName(playerName);
+        }
+
+        public dynamic isPlayerInIngame(string gameName, int playerIndex)
+        {
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return false;
+
+            return players[playerIndex].StatusInHand != Status.Folded;
         }
 
         public dynamic getBoard(string gameName)
         {
-            return _botGameStates[gameName].getBoard();
+            var board = _botGameStates[gameName].getBoard().Cards;
+            var result = new List<string>();
+
+            foreach (var card in board)
+            {
+                result.Add(card.ToString());
+            }
+
+            return result;
+        }
+
+        public dynamic getHoleCards(string gameName)
+        {
+            var holecards = _botGameStates[gameName].getHeroHoleCards();
+
+            return new List<string>
+            {
+                holecards.Card0.ToString(),
+                holecards.Card1.ToString()
+            };
         }
 
         public dynamic getButtonInd(string gameName)
         {
             return _botGameStates[gameName].getButtonInd();
+        }
+
+        public dynamic getPotSize(string gameName)
+        {
+            return _botGameStates[gameName].potSize();
         }
 
         public void startNewHand(string gameName, int buttonInd)
@@ -137,9 +206,9 @@ namespace G5Gym
             _botGameStates[gameName].playerCheckCalls();
         }
 
-        public void playerBetRaisesBy(string gameName, int ammount)
+        public void playerBetRaisesBy(string gameName, int amount)
         {
-            _botGameStates[gameName].playerBetRaisesBy(ammount);
+            _botGameStates[gameName].playerBetRaisesBy(amount);
         }
 
         public void playerFolds(string gameName)
@@ -153,7 +222,7 @@ namespace G5Gym
 
             return new {
                 actionType = bd.actionType,
-                byAmmount = bd.byAmmount,
+                byAmount = bd.byAmount,
                 checkCallEV = bd.checkCallEV,
                 betRaiseEV = bd.betRaiseEV,
                 timeSpentSeconds = bd.timeSpentSeconds,
@@ -161,9 +230,18 @@ namespace G5Gym
             };
         }
 
-        public void finishHand(string gameName)
+        public void finishHand(string gameName, int winnings0, int winnings1, int winnings2, int winnings3, int winnings4, int winnings5)
         {
-            // _botGameState.finishHand(List<int> winnings);
+            var winnings = new List<int> { 
+                winnings0, 
+                winnings1, 
+                winnings2,
+                winnings3,
+                winnings4,
+                winnings5,
+            };
+
+            _botGameStates[gameName].finishHand(winnings);
             _opponentModeling.addHand(_botGameStates[gameName].getCurrentHand());
         }
 
