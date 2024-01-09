@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy &quot;$(SolutionDir)..\redist\*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDit)g5api.py&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\&quot;" />
+      <Exec Command="xcopy &quot;$(SolutionDir)..\redist\*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot; /Y /I /E&#xD;&#xA;copy &quot;$(TargetDir)*.*&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\*.*&quot;&#xD;&#xA;copy &quot;$(ProjectDit)g5api.py&quot; &quot;$(SolutionDir)bin\$(ConfigurationName)\&quot;" />
     </Target>
 
 </Project>
