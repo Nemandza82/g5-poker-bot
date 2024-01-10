@@ -70,10 +70,11 @@
     {
         SmallBlind = 0,
         BigBlind = 1,
-        Middle1 = 2,
-        Middle2 = 3,
+        UTG = 2,
+        HJ = 3,
         CutOff = 4,
-        Button = 5
+        Button = 5,
+        Unknown = 6,
     }
 
     /// <summary>

@@ -5,6 +5,9 @@ using System.Text;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
+using System.IO;
+using System.Reflection;
+
 
 namespace G5.Logic
 {
@@ -18,6 +21,9 @@ namespace G5.Logic
         private TableType _tableType;
 
         private Estimators.IActionEstimator _actionEstimator;
+        private PreFlopCharts _preFlopCharts;
+        private Random _rng = new Random();
+
         private List<Player> _players;
         private Board _board;
         private HoleCards _heroHoleCards;
@@ -59,6 +65,9 @@ namespace G5.Logic
                 throw new Exception("Length of playerNames and stackSizes arrays must be the same");
 
             _actionEstimator = actionEstimator;
+
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\");
 
             _tableType = tableType;
             _players = new List<Player>();
@@ -102,13 +111,13 @@ namespace G5.Logic
             if (_players.Count > 4)
             {
                 int middleInd = (_buttonInd + _players.Count - 2) % _players.Count;
-                _players[middleInd].PreFlopPosition = Position.Middle2;
+                _players[middleInd].PreFlopPosition = Position.HJ;
             }
 
             if (_players.Count > 5)
             {
                 int middleInd = (_buttonInd + _players.Count - 3) % _players.Count;
-                _players[middleInd].PreFlopPosition = Position.Middle1;
+                _players[middleInd].PreFlopPosition = Position.UTG;
             }
 
             _playerToActInd = (_players.Count > 2) ? ((_buttonInd + 3) % _players.Count) : smallBlindInd();
@@ -652,7 +661,8 @@ namespace G5.Logic
                 byAmount = 0,
                 betRaiseEV = 0.0f,
                 checkCallEV = 0.0f,
-                timeSpentSeconds = 0
+                timeSpentSeconds = 0,
+                message = ""
             };
 
             if (_playerToActInd != _heroInd)
@@ -684,71 +694,77 @@ namespace G5.Logic
                 bd.betRaiseEV = -10.0f;
             }
 
-            bd.timeSpentSeconds = (DateTime.Now - startTime).TotalSeconds;
-            bd.actionType = ActionType.Fold;
-            bd.byAmount = 0;
+            // Try to read preflop charts
+            var pfcActionDistribution = _preFlopCharts.GetActionDistribution(this);
 
-            // If both EVs are less than zero then fold
-            if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
+            if (pfcActionDistribution != null)
             {
-                if (ammountToCall == 0)
-                {
-                    bd.message = "Both EVs are less then 0, but ammountToCall is 0 so check.";
-                    bd.actionType = ActionType.Check;
-                }
-                else
-                {
-                    bd.message = "Both EVs are less then 0, and ammountToCall is >0 so fold.";
-                    bd.actionType = ActionType.Fold;
-                }
+                bd.message += $"We have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
+                bd.message += $"We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb}.\n";
+
+                bd.actionType = pfcActionDistribution.sample(_rng);
+                bd.message += $"Sampled action is {bd.actionType}";
             }
             else
             {
-                if (ammountToCall >= _players[_heroInd].Stack)
+                bd.message += $"We do NOT have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
+                bd.message += $"Using modeling estimator result here. ";
+
+                if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
                 {
-                    bd.message = "EV for call or raise is >= 0 and ammountToCall is > than player stack so call.";
-                    bd.byAmount = _players[_heroInd].Stack;
+                    bd.actionType = ActionType.Fold;
+                    bd.message += "Both EVs are less then 0 so fold.\n";
+                }
+                else if (bd.checkCallEV > bd.betRaiseEV)
+                {
                     bd.actionType = ActionType.Call;
+                    bd.message += "Check/call EV is positive and larger than bet/raise EV so check/call.\n";
                 }
-                else if (bd.betRaiseEV < 0)
-                {
-                    bd.message = "EV for raise is < 0 and EV for call is >= 0 so call.";
-                    bd.byAmount = ammountToCall;
-                    bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
-                }
-                else if (bd.betRaiseEV > bd.checkCallEV)
+                else
                 {
                     bd.actionType = ActionType.Raise;
-                    bd.byAmount = getRaiseAmmount();
-
-                    if ((3 * bd.byAmount / 2) >= getPlayerToAct().Stack)
-                    {
-                        bd.message = "Raise EV is positive and larger than call EV, but raise ammount is close to player stack so go all in.";
-                        bd.byAmount = getPlayerToAct().Stack;
-                        bd.actionType = ActionType.AllIn;
-                    }
-                    else
-                    {
-                        bd.message = "Raise EV is positive and larger than call EV so raise.";
-                    }
+                    bd.message += "Bet/raise EV is positive and larger than check/call EV so bet/raise.\n";
                 }
-                else
-                {
-                    bd.message = "Call EV is positive and larger than raise EV so check/call.";
-                    bd.actionType = (ammountToCall > 0) ? ActionType.Call : ActionType.Check;
-                    bd.byAmount = ammountToCall;
-                }
-
-                /* // Random actions
-                if (_random.NextDouble() < checkCallEV * checkCallEV / (checkCallEV * checkCallEV + betRaiseEV * betRaiseEV))
-                {
-                    return (_numBets == 0) ? ActionType.Check : ActionType.Call;
-                }
-                else
-                {
-                    return ActionType.Raise;
-                }*/
             }
+
+            bd.timeSpentSeconds = (DateTime.Now - startTime).TotalSeconds;
+            bd.byAmount = 0;
+
+            // If both EVs are less than zero then fold
+            if (bd.actionType == ActionType.Fold)
+            {
+                bd.byAmount = 0;
+
+                if (ammountToCall == 0)
+                {
+                    bd.message += "But ammount to call is 0 so check.\n";
+                    bd.actionType = ActionType.Check;
+                }
+            }
+            else if (bd.actionType == ActionType.Call)
+            {
+                bd.byAmount = ammountToCall;
+
+                if (ammountToCall == 0)
+                {
+                    bd.message += "AmmountToCall is 0 -> check.\n";
+                    bd.actionType = ActionType.Check;
+                }
+            }
+            else // its raise
+            {
+                bd.byAmount = getRaiseAmmount();
+            }
+
+            if ((3 * bd.byAmount / 2) >= _players[_heroInd].Stack)
+            {
+                bd.message += "But amount to put in pot is close to (or larger than) players stack so go all in!\n";
+                bd.byAmount = _players[_heroInd].Stack;
+                bd.actionType = ActionType.AllIn;
+            }
+
+            // Remove all leading and trailing white-space characters 
+            bd.message = bd.message.Trim();
 
             return bd;
         }
