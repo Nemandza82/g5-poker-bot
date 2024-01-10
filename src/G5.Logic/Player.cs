@@ -28,7 +28,7 @@ namespace G5.Logic
             StatusInHand = Status.ToAct;
             LastAction = ActionType.Fold;
             PrevStreetAction = ActionType.Fold;
-            PreFlopPosition = Position.Middle1;
+            PreFlopPosition = Position.UTG;
 
             Range = new Range();
             Model = playerModel;

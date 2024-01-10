@@ -7,12 +7,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace G5.Logic
 {
-    internal struct ActionDistribution
+    internal class ActionDistribution
     {
         public float brProb;
         public float ccProb;
 
-        ActionDistribution(float br, float cc)
+        public ActionDistribution(float br, float cc)
         {
             brProb = br;
             ccProb = cc;
@@ -39,7 +39,7 @@ namespace G5.Logic
             }
         }
 
-        ActionType sample(Random prng)
+        public ActionType sample(Random prng)
         {
             var x = (float)prng.NextDouble();
 
@@ -129,12 +129,12 @@ namespace G5.Logic
                     else
                         text = $"{rank_strings[row]}{rank_strings[col]}";
 
-                    actionDist[text] = new ActionDistribution { brProb = brProb, ccProb = ccProb };
+                    actionDist[text] = new ActionDistribution(brProb, ccProb);
                 }
             }
         }
 
-        ActionDistribution GetActionDistribution(HoleCards holeCards)
+        public ActionDistribution GetActionDistribution(HoleCards holeCards)
         {
             string suite = (holeCards.Card0.suite == holeCards.Card1.suite) ? "s" : "o";
 

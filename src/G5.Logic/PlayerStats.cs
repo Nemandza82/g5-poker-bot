@@ -238,10 +238,10 @@ namespace G5.Logic
                 return Position.CutOff;
 
             if (playerPos == playerList.Count - 3)
-                return Position.Middle2;
+                return Position.HJ;
 
             if (playerPos == playerList.Count - 4)
-                return Position.Middle1;
+                return Position.UTG;
 
             Debug.Assert(false);
             return Position.Button;
