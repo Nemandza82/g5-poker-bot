@@ -169,6 +169,16 @@ namespace G5Gym
             return _botGameStates[gameName].getButtonInd();
         }
 
+        public dynamic getSmallBlindInd(string gameName)
+        {
+            return _botGameStates[gameName].smallBlindInd();
+        }
+
+        public dynamic getBigBlindInd(string gameName)
+        {
+            return _botGameStates[gameName].bigBlindInd();
+        }
+
         public dynamic getPotSize(string gameName)
         {
             return _botGameStates[gameName].potSize();

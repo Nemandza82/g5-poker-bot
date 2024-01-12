@@ -36,7 +36,7 @@ namespace G5.Logic
         private int _numBets;
         private int _numCallers;
 
-        private int smallBlindInd()
+        public int smallBlindInd()
         {
             if (_players.Count == 2)
                 return _buttonInd;
@@ -44,7 +44,7 @@ namespace G5.Logic
             return (_buttonInd + 1) % _players.Count;
         }
 
-        private int bigBlindInd()
+        public int bigBlindInd()
         {
             if (_players.Count == 2)
                 return (_buttonInd + 1) % 2;
@@ -699,31 +699,31 @@ namespace G5.Logic
 
             if (pfcActionDistribution != null)
             {
-                bd.message += $"We have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
-                bd.message += $"We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb}.\n";
+                bd.message += $" -> We have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
+                bd.message += $" -> We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb}.\n";
 
                 bd.actionType = pfcActionDistribution.sample(_rng);
-                bd.message += $"Sampled action is {bd.actionType}";
+                bd.message += $" -> Sampled action is {bd.actionType}";
             }
             else
             {
-                bd.message += $"We do NOT have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
-                bd.message += $"Using modeling estimator result here. ";
+                bd.message += $" -> We do NOT have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
+                bd.message += $" -> Using modeling estimator result here br {bd.betRaiseEV} cc {bd.checkCallEV}.\n";
 
                 if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
                 {
                     bd.actionType = ActionType.Fold;
-                    bd.message += "Both EVs are less then 0 so fold.\n";
+                    bd.message += " -> Both EVs are less then 0 so fold.\n";
                 }
                 else if (bd.checkCallEV > bd.betRaiseEV)
                 {
                     bd.actionType = ActionType.Call;
-                    bd.message += "Check/call EV is positive and larger than bet/raise EV so check/call.\n";
+                    bd.message += " -> Check/call EV is positive and larger than bet/raise EV so check/call.\n";
                 }
                 else
                 {
                     bd.actionType = ActionType.Raise;
-                    bd.message += "Bet/raise EV is positive and larger than check/call EV so bet/raise.\n";
+                    bd.message += " -> Bet/raise EV is positive and larger than check/call EV so bet/raise.\n";
                 }
             }
 
@@ -737,7 +737,7 @@ namespace G5.Logic
 
                 if (ammountToCall == 0)
                 {
-                    bd.message += "But ammount to call is 0 so check.\n";
+                    bd.message += " -> But ammount to call is 0 so check.\n";
                     bd.actionType = ActionType.Check;
                 }
             }
@@ -747,7 +747,7 @@ namespace G5.Logic
 
                 if (ammountToCall == 0)
                 {
-                    bd.message += "AmmountToCall is 0 -> check.\n";
+                    bd.message += " -> AmmountToCall is 0 -> check.\n";
                     bd.actionType = ActionType.Check;
                 }
             }
@@ -758,7 +758,7 @@ namespace G5.Logic
 
             if ((3 * bd.byAmount / 2) >= _players[_heroInd].Stack)
             {
-                bd.message += "But amount to put in pot is close to (or larger than) players stack so go all in!\n";
+                bd.message += " -> But amount to put in pot is close to (or larger than) players stack so go all in!\n";
                 bd.byAmount = _players[_heroInd].Stack;
                 bd.actionType = ActionType.AllIn;
             }
