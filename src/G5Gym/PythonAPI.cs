@@ -184,10 +184,10 @@ namespace G5Gym
             return _botGameStates[gameName].potSize();
         }
 
-        public void startNewHand(string gameName, int buttonInd)
+        public void startNewHand(string gameName, int buttonInd, List<int> sittingOutPlayers)
         {
             _botGameStates[gameName].setButtonInd(buttonInd);
-            _botGameStates[gameName].startNewHand();
+            _botGameStates[gameName].startNewHand(sittingOutPlayers);
         }
 
         public void dealHoleCards(string gameName, string card0, string card1)

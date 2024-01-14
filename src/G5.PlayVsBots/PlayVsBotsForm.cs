@@ -286,7 +286,7 @@ namespace G5.PlayVsBots
                     if (bd.actionType == ActionType.AllIn)
                         actionStr = " goes allin ";
 
-                    playerBetRaisesBy(bd.byAmmount);
+                    playerBetRaisesBy(bd.byAmount);
                 }
 
                 var botName = getPlayers()[playerToActInd].Name;

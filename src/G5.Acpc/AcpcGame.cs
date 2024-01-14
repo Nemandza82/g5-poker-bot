@@ -190,7 +190,7 @@ namespace G5.Acpc
             else if (bd.actionType == ActionType.Check || bd.actionType == ActionType.Call)
                 return ":c";
             else
-                return ":r" + (_botGameState.getPlayerToAct().MoneyInPot + bd.byAmmount).ToString();
+                return ":r" + (_botGameState.getPlayerToAct().MoneyInPot + bd.byAmount).ToString();
         }
 
         public void finishHand()

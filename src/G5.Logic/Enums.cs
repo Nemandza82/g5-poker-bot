@@ -74,7 +74,7 @@
         HJ = 3,
         CutOff = 4,
         Button = 5,
-        Unknown = 6,
+        Empty = 6,
     }
 
     /// <summary>

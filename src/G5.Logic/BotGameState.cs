@@ -38,18 +38,24 @@ namespace G5.Logic
 
         public int smallBlindInd()
         {
-            if (_players.Count == 2)
-                return _buttonInd;
+            for (int i = 0; i < _players.Count; i++)
+            {
+                if (_players[i].PreFlopPosition == Position.SmallBlind)
+                    return i;
+            }
 
-            return (_buttonInd + 1) % _players.Count;
+            return -1;
         }
 
         public int bigBlindInd()
         {
-            if (_players.Count == 2)
-                return (_buttonInd + 1) % 2;
+            for (int i = 0; i < _players.Count; i++)
+            {
+                if (_players[i].PreFlopPosition == Position.BigBlind)
+                    return i;
+            }
 
-            return (_buttonInd + 2) % _players.Count;
+            return -1;
         }
 
         public BotGameState(string[] playerNames,
@@ -85,42 +91,128 @@ namespace G5.Logic
             }
         }
 
-        public void startNewHand()
+        /// <summary>
+        /// Sets upplayer positions (smallblind, bigblind, button). Return player to act index.
+        /// </summary>
+        /// <param name="sittingOutPlayers"></param>
+        /// <returns></returns>
+        private int setupPlayerPositions(List<int> sittingOutPlayers)
+        {
+            int numPlayersInPlay = _players.Count - sittingOutPlayers.Count;
+            List<Position> positionsToAssign = new List<Position>();
+            Position playerToActPosition = Position.Empty;
+
+            if (numPlayersInPlay == 2)
+            {
+                positionsToAssign = new List<Position>
+                {
+                    Position.SmallBlind,
+                    Position.BigBlind
+                };
+
+                playerToActPosition = Position.SmallBlind;
+            }
+            else if (numPlayersInPlay == 3)
+            {
+                positionsToAssign = new List<Position>
+                {
+                    Position.Button,
+                    Position.SmallBlind,
+                    Position.BigBlind
+                };
+
+                playerToActPosition = Position.Button;
+            }
+            else if (numPlayersInPlay == 4)
+            {
+                positionsToAssign = new List<Position>
+                {
+                    Position.Button,
+                    Position.SmallBlind,
+                    Position.BigBlind,
+                    Position.CutOff,
+                };
+
+                playerToActPosition = Position.CutOff;
+            }
+            else if (numPlayersInPlay == 5)
+            {
+                positionsToAssign = new List<Position>
+                {
+                    Position.Button,
+                    Position.SmallBlind,
+                    Position.BigBlind,
+                    Position.HJ,
+                    Position.CutOff,
+                };
+
+                playerToActPosition = Position.HJ;
+            }
+            else if (numPlayersInPlay == 6)
+            {
+                positionsToAssign = new List<Position>
+                {
+                    Position.Button,
+                    Position.SmallBlind,
+                    Position.BigBlind,
+                    Position.UTG,
+                    Position.HJ,
+                    Position.CutOff,
+                };
+
+                playerToActPosition = Position.UTG;
+            }
+
+            int ind = _buttonInd;
+
+            while (positionsToAssign.Count > 0)
+            {
+                if (sittingOutPlayers.Contains(ind))
+                {
+                    _players[ind].PreFlopPosition = Position.Empty;
+                }
+                else
+                {
+                    _players[ind].PreFlopPosition = positionsToAssign[0];
+                    positionsToAssign.RemoveAt(0);
+                }
+
+                ind = (ind + 1) % _players.Count;
+            }
+
+            for (int i = 0; i <= _players.Count; i++)
+            {
+                if (_players[i].PreFlopPosition == playerToActPosition)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        public void startNewHand(List<int> sittingOutPlayers=null)
         {
             _street = Street.PreFlop;
             _numBets = 0;
             _numCallers = 0;
+
+            if (sittingOutPlayers == null)
+                sittingOutPlayers = new List<int>();
 
             _actionEstimator.newHand(this);
 
             foreach (Player player in _players)
                 player.ResetHand();
 
+            for (int i = 0; i < _players.Count; i++)
+            {
+                if (sittingOutPlayers.Contains(i))
+                    _players[i].StatusInHand = Status.Folded;
+            }
+
             Debug.Assert(_players.Count >= 2);
 
-            _players[_buttonInd].PreFlopPosition = Position.Button;
-            _players[smallBlindInd()].PreFlopPosition = Position.SmallBlind;
-            _players[bigBlindInd()].PreFlopPosition = Position.BigBlind;
-
-            if (_players.Count > 3)
-            {
-                int cutoffInd = (_buttonInd + _players.Count - 1) % _players.Count;
-                _players[cutoffInd].PreFlopPosition = Position.CutOff;
-            }
-
-            if (_players.Count > 4)
-            {
-                int middleInd = (_buttonInd + _players.Count - 2) % _players.Count;
-                _players[middleInd].PreFlopPosition = Position.HJ;
-            }
-
-            if (_players.Count > 5)
-            {
-                int middleInd = (_buttonInd + _players.Count - 3) % _players.Count;
-                _players[middleInd].PreFlopPosition = Position.UTG;
-            }
-
-            _playerToActInd = (_players.Count > 2) ? ((_buttonInd + 3) % _players.Count) : smallBlindInd();
+            // Setup player positions (button, smallblind, bigblind
+            _playerToActInd = setupPlayerPositions(sittingOutPlayers);
 
             _currentHand = new Hand
             {

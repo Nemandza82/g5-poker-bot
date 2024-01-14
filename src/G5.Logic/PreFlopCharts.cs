@@ -29,7 +29,7 @@ namespace G5.Logic
             else if (shorthand == "BB")
                 return Position.BigBlind;
 
-            return Position.Unknown;
+            return Position.Empty;
         }
 
         public PreFlopCharts(string path)
@@ -52,7 +52,7 @@ namespace G5.Logic
                 {
                     var position = shorthandToPosition(parts[1]);
 
-                    if (position != Position.Unknown)
+                    if (position != Position.Empty)
                     {
                         rfi_charts[position] = new PreFlopChart(file);
                         Console.WriteLine($"Loaded pre flop chart for {position} RFI from {fileName}.");
@@ -88,7 +88,7 @@ namespace G5.Logic
 
                 // At this point num bets must be 1
                 // Find villian position
-                Position villianPos = Position.Unknown;
+                Position villianPos = Position.Empty;
 
                 for (int i = 0; i < gameState.getPlayers().Count; i++)
                 {
@@ -101,7 +101,7 @@ namespace G5.Logic
                         villianPos = villian.PreFlopPosition;
                 }
 
-                if (villianPos == Position.Unknown)
+                if (villianPos == Position.Empty)
                     return null;
 
                 if (facing_rfi_charts[heroPos].ContainsKey(villianPos))
