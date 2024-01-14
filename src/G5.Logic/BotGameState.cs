@@ -171,7 +171,12 @@ namespace G5.Logic
 
             while (positionsToAssign.Count > 0)
             {
-                if (sittingOutPlayers.Contains(ind))
+                if (positionsToAssign[0] == Position.Button) // Even sittingOutPlayers can be dealer so just assign dealer!
+                {
+                    _players[ind].PreFlopPosition = Position.Button;
+                    positionsToAssign.RemoveAt(0);
+                }
+                else if (sittingOutPlayers.Contains(ind))
                 {
                     _players[ind].PreFlopPosition = Position.Empty;
                 }
@@ -754,6 +759,37 @@ namespace G5.Logic
             public string message;
         }
 
+        private ActionType randomSampleAction(float brEv, float ccEv)
+        {
+            // If one EV is less than 0 just return other one
+            if (brEv < 0)
+                return ActionType.Call;
+
+            if (ccEv < 0)
+                return ActionType.Raise;
+
+            // Normalize to sum of 1
+            float brProb = brEv / (brEv + ccEv);
+            float ccProb = ccEv / (brEv + ccEv);
+
+            // For very small probabilities just choose other one
+            if (brProb < 0.1)
+                return ActionType.Call;
+
+            if (ccProb < 0.1)
+                return ActionType.Raise;
+
+            // Otherwise randomize
+            if ((float)_rng.NextDouble() < brProb)
+            {
+                return ActionType.Raise;
+            }
+            else
+            {
+                return ActionType.Call;
+            }
+        }
+
         public BotDecision calculateHeroAction()
         {
             int nOfOpponents = numActivePlayers() - 1;
@@ -817,6 +853,11 @@ namespace G5.Logic
                 {
                     bd.actionType = ActionType.Fold;
                     bd.message += " -> Both EVs are less then 0 so fold.\n";
+                }
+                else if (bd.checkCallEV > 0 && bd.betRaiseEV > 0)
+                {
+                    bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
+                    bd.message += $" -> Both EVs are positive. Randomly sampling {bd.actionType}.\n";
                 }
                 else if (bd.checkCallEV > bd.betRaiseEV)
                 {

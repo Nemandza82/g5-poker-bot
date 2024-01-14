@@ -20,7 +20,7 @@ namespace G5Gym
         public PythonAPI(int numPlayers)
         {
             var opponentModelingOptions = new OpponentModeling.Options();
-            opponentModelingOptions.recentHandsCount = 50;
+            opponentModelingOptions.recentHandsCount = 30;
 
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
