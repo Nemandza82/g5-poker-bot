@@ -102,7 +102,11 @@ namespace G5.Logic
             List<Position> positionsToAssign = new List<Position>();
             Position playerToActPosition = Position.Empty;
 
-            if (numPlayersInPlay == 2)
+            if (numPlayersInPlay < 2)
+            {
+                return -1;
+            }
+            else if (numPlayersInPlay == 2)
             {
                 positionsToAssign = new List<Position>
                 {
@@ -224,8 +228,11 @@ namespace G5.Logic
 
             if (_players.Count == 2)
             {
-                _currentHand.addPlayer(_players[smallBlindInd()].Name, _players[smallBlindInd()].Stack);
-                _currentHand.addPlayer(_players[bigBlindInd()].Name, _players[bigBlindInd()].Stack);
+                if (smallBlindInd() > -1)
+                    _currentHand.addPlayer(_players[smallBlindInd()].Name, _players[smallBlindInd()].Stack);
+
+                if (bigBlindInd() > -1)
+                    _currentHand.addPlayer(_players[bigBlindInd()].Name, _players[bigBlindInd()].Stack);
             }
             else
             {
@@ -237,8 +244,12 @@ namespace G5.Logic
             }
 
             _board = new Board();
-            _players[smallBlindInd()].Posts(_bigBlingSize / 2);
-            _players[bigBlindInd()].Posts(_bigBlingSize);
+
+            if (smallBlindInd() > -1)
+                _players[smallBlindInd()].Posts(_bigBlingSize / 2);
+
+            if (bigBlindInd() > -1)
+                _players[bigBlindInd()].Posts(_bigBlingSize);
         }
 
         public void finishHand(List<int> winnings)
