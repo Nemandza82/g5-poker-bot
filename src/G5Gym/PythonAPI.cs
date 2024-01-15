@@ -55,7 +55,14 @@ namespace G5Gym
         }
 
         // bigBlindSize int in cents. Eg. $0.04 is 4.
-        public dynamic createGame(string gameName, string[] playerNames, int[] stackSizes, int heroInd, int buttonInd, int bigBlindSize)
+        public dynamic createGame(
+            string gameName, 
+            string[] playerNames, 
+            int[] stackSizes, 
+            int heroInd, 
+            int buttonInd, 
+            int bigBlindSize, 
+            bool randomlySampleActions)
         {
             _botGameStates[gameName] = new BotGameState(playerNames, 
                 stackSizes,
@@ -64,7 +71,8 @@ namespace G5Gym
                 bigBlindSize,
                 PokerClient.PokerKing,
                 TableType.SixMax,
-                new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.PokerKing));
+                new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.PokerKing),
+                randomlySampleActions);
 
             Console.WriteLine($"Created {gameName} BotGameState successfully");
             return gameName;

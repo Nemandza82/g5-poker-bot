@@ -36,6 +36,9 @@ namespace G5.Logic
         private int _numBets;
         private int _numCallers;
 
+        // Options
+        private bool _randomlySampleActions;
+
         public int smallBlindInd()
         {
             for (int i = 0; i < _players.Count; i++)
@@ -65,12 +68,14 @@ namespace G5.Logic
             int bigBlingSize, 
             PokerClient client, 
             TableType tableType, 
-            Estimators.IActionEstimator actionEstimator)
+            Estimators.IActionEstimator actionEstimator,
+            bool randomlySampleActions = false)
         {
             if (playerNames.Count() != stackSizes.Count())
                 throw new Exception("Length of playerNames and stackSizes arrays must be the same");
 
             _actionEstimator = actionEstimator;
+            _randomlySampleActions = randomlySampleActions;
 
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\");
@@ -854,7 +859,7 @@ namespace G5.Logic
                     bd.actionType = ActionType.Fold;
                     bd.message += " -> Both EVs are less then 0 so fold.\n";
                 }
-                else if (bd.checkCallEV > 0 && bd.betRaiseEV > 0)
+                else if (_randomlySampleActions && bd.checkCallEV > 0 && bd.betRaiseEV > 0)
                 {
                     bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
                     bd.message += $" -> Both EVs are positive. Randomly sampling {bd.actionType}.\n";
