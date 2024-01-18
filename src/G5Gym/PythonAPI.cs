@@ -17,10 +17,14 @@ namespace G5Gym
         private OpponentModeling _opponentModeling;
         private Dictionary<string, BotGameState> _botGameStates = new Dictionary<string, BotGameState>();
 
-        public PythonAPI(int numPlayers)
+        public PythonAPI(int numPlayers, int recentHandsCount)
         {
             var opponentModelingOptions = new OpponentModeling.Options();
-            opponentModelingOptions.recentHandsCount = 30;
+
+            if (recentHandsCount < 0)
+                recentHandsCount = 15;
+
+            opponentModelingOptions.recentHandsCount = recentHandsCount;
 
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 

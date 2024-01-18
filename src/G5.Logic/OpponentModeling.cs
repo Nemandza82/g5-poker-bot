@@ -204,7 +204,7 @@ namespace G5.Logic
                     _recentHandsList.Add(playerKey, handList);
                 }
                 
-                while (handList.Count >= _options.recentHandsCount)
+                while (handList.Count > _options.recentHandsCount)
                     handList.RemoveAt(0);
 
                 handList.Add(hand);
@@ -231,6 +231,8 @@ namespace G5.Logic
                     _baseModels[i] = estimateBaseModel(_fullStatsList[i]);
                 }
             });
+
+            Console.WriteLine($"Estimated {_baseModels.Count} base models from list of {_fullStatsList.Count} stat sets.");
 
             /* // Not parallel
             foreach (var stats in _fullStatsList)
