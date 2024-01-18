@@ -844,7 +844,7 @@ namespace G5.Logic
             if (pfcActionDistribution != null)
             {
                 bd.message += $" -> We have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
-                bd.message += $" -> We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb}.\n";
+                bd.message += $" -> We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb}. Modeling estimator gave br EV {bd.betRaiseEV:.2f} cc EV {bd.checkCallEV:.2f}.().\n";
 
                 bd.actionType = pfcActionDistribution.sample(_rng);
                 bd.message += $" -> Sampled action is {bd.actionType}";
@@ -852,7 +852,7 @@ namespace G5.Logic
             else
             {
                 bd.message += $" -> We do NOT have pre-flop chart for this situation ({_street}, num bets {_numBets}, num callers {_numCallers}).\n";
-                bd.message += $" -> Using modeling estimator result here br {bd.betRaiseEV} cc {bd.checkCallEV}.\n";
+                bd.message += $" -> Using modeling estimator result here br EV {bd.betRaiseEV:.2f} cc EV {bd.checkCallEV:.2f}.\n";
 
                 if (bd.checkCallEV < 0 && bd.betRaiseEV <= 0)
                 {
