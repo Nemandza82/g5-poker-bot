@@ -799,7 +799,7 @@ namespace G5.Logic
         /// Problematic sutuation we have is after flop when we are in position and opponent checks we are always raising.
         /// </summary>
         /// <returns></returns>
-        private bool isProblematicSituation()
+        private bool isProblematicSituation(float betRaiseEV, float checkCallEV)
         {
             if ((_street == Street.Flop || _street == Street.Turn) && 
                 numActivePlayers() == 2 &&
@@ -808,8 +808,8 @@ namespace G5.Logic
             {
                 var handStrength = HandStrength.calculateHandStrength(_heroHoleCards, _board);
 
-                // Problematic situation is only when we dont have anything (High card).
-                return handStrength.rank == HandRank.HighCard;
+                // Problematic situation is only when we dont have anything (High card) and want to raise.
+                return betRaiseEV > checkCallEV && checkCallEV > 0 && handStrength.rank == HandRank.HighCard;
             }
 
             return false;
@@ -887,7 +887,7 @@ namespace G5.Logic
                     bd.actionType = ActionType.Fold;
                     bd.message += " -> Both EVs are less then 0 so fold.\n";
                 }
-                else if (isProblematicSituation() && bd.checkCallEV > 0 && bd.betRaiseEV > 0)
+                else if (isProblematicSituation(bd.betRaiseEV, bd.checkCallEV))
                 {
                     // In case of problematic situation mix strategy a bit.
                     bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
