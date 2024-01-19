@@ -120,42 +120,42 @@ namespace G5.Logic
             return calculateHandStrength(heroHoleCards, board.getSortedCards());
         }
 
-        private static void InsertSortedHoleCardsToSortedBoard(Card[] allCards, HoleCards heroHoleCards, Card[] board)
+        private static Card[] InsertSortedHoleCardsToSortedBoard(HoleCards heroHoleCards, Card[] board)
         {
+            List<Card> allCards = new List<Card>();
             int boardI = 0;
             int handI = 0;
-            int k = 0;
 
-            while (k < 7)
+            while (allCards.Count() < board.Count() + 2)
             {
                 Card heroCard = heroHoleCards.GetCard(handI);
 
-                if (boardI < 5 && handI < 2)
+                if (boardI < board.Count() && handI < 2)
                 {
                     if (board[boardI].rank > heroCard.rank)
                     {
-                        allCards[k] = board[boardI];
+                        allCards.Add(board[boardI]);
                         boardI++;
                     }
                     else
                     {
-                        allCards[k] = heroCard;
+                        allCards.Add(heroCard);
                         handI++;
                     }
                 }
-                else if (boardI < 5)
+                else if (boardI < board.Count())
                 {
-                    allCards[k] = board[boardI];
+                    allCards.Add(board[boardI]);
                     boardI++;
                 }
                 else
                 {
-                    allCards[k] = heroCard;
+                    allCards.Add(heroCard);
                     handI++;
                 }
-
-                k++;
             }
+
+            return allCards.ToArray();
         }
 
         /// <summary>
@@ -163,10 +163,8 @@ namespace G5.Logic
         /// </summary>
         public static HandStrength calculateHandStrength(HoleCards heroHoleCards, Card[] sortedBoard)
         {
-            Card[] allCards = new Card[7];
             Card[] possibleHand = new Card[5];
-
-            InsertSortedHoleCardsToSortedBoard(allCards, heroHoleCards, sortedBoard);
+            Card[] allCards = InsertSortedHoleCardsToSortedBoard(heroHoleCards, sortedBoard);
 
             HandStrength hsCandidate = new HandStrength();
             HandStrength maxHandStrangth = null;
@@ -193,19 +191,22 @@ namespace G5.Logic
                     if (i != 4 && j != 4)
                         possibleHand[k++] = allCards[4];
 
-                    if (i != 5 && j != 5)
+                    if (i != 5 && j != 5 && allCards.Length > 5)
                         possibleHand[k++] = allCards[5];
 
-                    if (i != 6 && j != 6)
+                    if (i != 6 && j != 6 && allCards.Length > 6)
                         possibleHand[k++] = allCards[6];
 
-                    HandStrength.calculateHandStrengthSorted(ref hsCandidate, possibleHand);
-                    int value = hsCandidate.Value();
-
-                    if (maxHandStrangthValue < value)
+                    if (k == 5)
                     {
-                        maxHandStrangthValue = value;
-                        maxHandStrangth = new HandStrength(hsCandidate);
+                        calculateHandStrengthSorted(ref hsCandidate, possibleHand);
+                        int value = hsCandidate.Value();
+
+                        if (maxHandStrangthValue < value)
+                        {
+                            maxHandStrangthValue = value;
+                            maxHandStrangth = new HandStrength(hsCandidate);
+                        }
                     }
                 }
             }
