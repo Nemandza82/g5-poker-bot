@@ -76,7 +76,7 @@ namespace G5.Logic
 
             var heroPos = gameState.getHero().PreFlopPosition;
 
-            if (gameState.getNumBets() == 0 && gameState.getNumCallers() <= 1)
+            if (gameState.getNumBets() == 0 && gameState.getNumCallers() == 0)
             {
                 if (rfi_charts.ContainsKey(heroPos))
                     return rfi_charts[heroPos].GetActionDistribution(gameState.getHeroHoleCards());

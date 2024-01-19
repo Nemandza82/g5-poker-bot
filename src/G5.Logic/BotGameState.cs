@@ -795,6 +795,27 @@ namespace G5.Logic
             }
         }
 
+        /// <summary>
+        /// Problematic sutuation we have is after flop when we are in position and opponent checks we are always raising.
+        /// </summary>
+        /// <returns></returns>
+        private bool isProblematicSituation()
+        {
+            if ((_street == Street.Flop || _street == Street.Turn) && 
+                numActivePlayers() == 2 &&
+                isPlayerInPosition(_heroInd) &&
+                getAmountToCall() == 0)
+            {
+                var handStrength = HandStrength.calculateHandStrength(_heroHoleCards, _board);
+
+                // Problematic situation is only when we dont have anything (High card).
+                return handStrength.rank == HandRank.HighCard;
+            }
+
+            return false;
+        }
+
+
         public BotDecision calculateHeroAction()
         {
             int nOfOpponents = numActivePlayers() - 1;
@@ -865,6 +886,12 @@ namespace G5.Logic
                 {
                     bd.actionType = ActionType.Fold;
                     bd.message += " -> Both EVs are less then 0 so fold.\n";
+                }
+                else if (isProblematicSituation() && bd.checkCallEV > 0 && bd.betRaiseEV > 0)
+                {
+                    // In case of problematic situation mix strategy a bit.
+                    bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
+                    bd.message += $" -> This is problematic situation in position after flop after opponent checks. Mix strategy. Randomly sampling {bd.actionType}.\n";
                 }
                 else if (_randomlySampleActions && bd.checkCallEV > 0 && bd.betRaiseEV > 0)
                 {
