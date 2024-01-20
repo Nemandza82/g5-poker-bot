@@ -887,12 +887,12 @@ namespace G5.Logic
                     bd.actionType = ActionType.Fold;
                     bd.message += " -> Both EVs are less then 0 so fold.\n";
                 }
-                else if (isProblematicSituation(bd.betRaiseEV, bd.checkCallEV))
+                /*else if (isProblematicSituation(bd.betRaiseEV, bd.checkCallEV))
                 {
                     // In case of problematic situation mix strategy a bit.
                     bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
                     bd.message += $" -> This is problematic situation in position after flop after opponent checks. Mix strategy. Randomly sampling {bd.actionType}.\n";
-                }
+                }*/
                 else if (_randomlySampleActions && bd.checkCallEV > 0 && bd.betRaiseEV > 0)
                 {
                     bd.actionType = randomSampleAction(bd.betRaiseEV, bd.checkCallEV);
