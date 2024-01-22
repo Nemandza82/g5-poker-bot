@@ -78,7 +78,7 @@ namespace G5.Logic
             _randomlySampleActions = randomlySampleActions;
 
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\200bb\\");
+            _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\100bb\\");
 
             _tableType = tableType;
             _players = new List<Player>();
@@ -867,7 +867,7 @@ namespace G5.Logic
                 var heroPos = getHero().PreFlopPosition;
 
                 bd.message += $" -> We have pre-flop chart for this situation (Hero pos {heroPos}, num bets {_numBets}, num callers {_numCallers}).\n";
-                bd.message += $" -> We are reading AD, br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb} (Modeling estimator gave br {bd.betRaiseEV:F2} cc {bd.checkCallEV:F2}).\n";
+                bd.message += $" -> We are reading AD, allin prob {pfcActionDistribution.allinProb} br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb} (Modeling estimator gave br {bd.betRaiseEV:F2} cc {bd.checkCallEV:F2}).\n";
 
                 bd.actionType = pfcActionDistribution.sample(_rng);
                 bd.message += $" -> Sampled action is {bd.actionType}";

@@ -9,13 +9,21 @@ namespace G5.Logic
 {
     internal class ActionDistribution
     {
+        public float allinProb;
         public float brProb;
         public float ccProb;
 
-        public ActionDistribution(float br, float cc)
+        public ActionDistribution(float allin, float br, float cc)
         {
+            allinProb = allin;
             brProb = br;
             ccProb = cc;
+
+            if (allinProb < 0)
+            {
+                Console.WriteLine($"Warning: allinProb < 0, {allinProb}");
+                brProb = 0;
+            }
 
             if (brProb < 0)
             {
@@ -29,11 +37,12 @@ namespace G5.Logic
                 ccProb = 0;
             }
 
-            if (brProb + ccProb > 1)
+            if (allinProb + brProb + ccProb > 1)
             {
-                Console.WriteLine($"Warning: brProb + ccProb > 1; ccProb {ccProb}; brProb {brProb}");
-                float sum = brProb + ccProb;
+                Console.WriteLine($"Warning: allinProb + brProb + ccProb > 1; allinProb {allinProb}; brProb {brProb}; ccProb {ccProb}");
+                float sum = allinProb + brProb + ccProb;
 
+                allinProb = allinProb / sum;
                 ccProb = ccProb / sum;
                 brProb = brProb / sum;
             }
@@ -43,11 +52,15 @@ namespace G5.Logic
         {
             var x = (float)prng.NextDouble();
 
-            if (x < brProb)
+            if (x < allinProb)
+            {
+                return ActionType.AllIn;
+            }
+            else if (x < allinProb + brProb)
             {
                 return ActionType.Raise;
             }
-            else if (x < brProb + ccProb)
+            else if (x < allinProb + brProb + ccProb)
             {
                 return ActionType.Call;
             }
@@ -87,16 +100,28 @@ namespace G5.Logic
                 if (splitted_line.Count > 0)
                     splitted_line.RemoveAt(0);
 
-                if (splitted_line.Count != 26)
+                if (splitted_line.Count != 39)
                 {
-                    var err = $"Error: Not correct length of line in PreFlopChart {path}. Expected 26.";
+                    var err = $"Error: Not correct length of line in PreFlopChart {path}. Expected 39.";
                     Console.WriteLine(err);
                     throw new Exception(err);
                 }
 
                 for (var col=0; col < 13; col++)
                 {
-                    string brText = splitted_line[col*2];
+                    string allinText = splitted_line[col * 3];
+                    float allinProb = 0;
+
+                    if (float.TryParse(allinText, out allinProb))
+                    {
+                        allinProb /= 100;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Warning: PreFlopChart {path}, row {row}, col {col} allinText '{allinText}' could not be parsed.");
+                    }
+
+                    string brText = splitted_line[col*3 + 1];
                     float brProb = 0;
                     
                     if (float.TryParse(brText, out brProb))
@@ -105,10 +130,10 @@ namespace G5.Logic
                     }
                     else
                     {
-                        Console.WriteLine($"Warning: PreFlopChart {path} String '{brText}' could not be parsed.");
+                        Console.WriteLine($"Warning: PreFlopChart {path}, row {row}, col {col} brText '{brText}' could not be parsed.");
                     }
 
-                    string ccText = splitted_line[col*2 + 1];
+                    string ccText = splitted_line[col*3 + 2];
                     float ccProb = 0;
 
                     if (float.TryParse(ccText, out ccProb))
@@ -117,7 +142,7 @@ namespace G5.Logic
                     }
                     else
                     {
-                        Console.WriteLine($"Warning: PreFlopChart {path} String '{ccText}' could not be parsed.");
+                        Console.WriteLine($"Warning: PreFlopChart {path}, row {row}, col {col} ccText '{ccText}' could not be parsed.");
                     }
 
                     string text = "";
@@ -129,7 +154,7 @@ namespace G5.Logic
                     else
                         text = $"{rank_strings[row]}{rank_strings[col]}";
 
-                    actionDist[text] = new ActionDistribution(brProb, ccProb);
+                    actionDist[text] = new ActionDistribution(allinProb, brProb, ccProb);
                 }
             }
         }
