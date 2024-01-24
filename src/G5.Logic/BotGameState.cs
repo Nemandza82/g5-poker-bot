@@ -35,6 +35,7 @@ namespace G5.Logic
         private Street _street = Street.PreFlop;
         private int _numBets;
         private int _numCallers;
+        private List<Position> _bettors;
 
         // Options
         private bool _randomlySampleActions;
@@ -78,7 +79,7 @@ namespace G5.Logic
             _randomlySampleActions = randomlySampleActions;
 
             string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\100bb\\");
+            _preFlopCharts = new PreFlopCharts(assemblyFolder + "\\PreFlopCharts\\200bb\\");
 
             _tableType = tableType;
             _players = new List<Player>();
@@ -208,6 +209,7 @@ namespace G5.Logic
             _street = Street.PreFlop;
             _numBets = 0;
             _numCallers = 0;
+            _bettors = new List<Position>();
 
             if (sittingOutPlayers == null)
                 sittingOutPlayers = new List<int>();
@@ -355,6 +357,11 @@ namespace G5.Logic
         public int getNumBets()
         {
             return _numBets;
+        }
+
+        public List<Position> getBettors()
+        {
+            return _bettors;
         }
 
         public int getNumCallers()
@@ -586,7 +593,8 @@ namespace G5.Logic
             goToFirstPlayer();
             _street = _street + 1;
             _numBets = 0;
-            _numCallers = 0;
+            _bettors = new List<Position>();
+           _numCallers = 0;
 
             if (_street == Street.Flop)
                 _actionEstimator.flopShown(getBoard(), getHeroHoleCards());
@@ -737,10 +745,14 @@ namespace G5.Logic
             Console.WriteLine($"{getPlayerToAct().Name} bets/raises by: {ammount}");
             _currentHand.addAction(_street, getPlayerToAct().Name, actionType, ammount);
 
+            if (actionType != ActionType.AllIn)
+                _bettors.Add(getPlayerToAct().PreFlopPosition);
+
             resetActedPlayersAfterRaise();
             goToNextPlayer();
             _numCallers = 0;
             _numBets += 1;
+            
 
             return actionType;
         }
@@ -865,8 +877,9 @@ namespace G5.Logic
             if (pfcActionDistribution != null)
             {
                 var heroPos = getHero().PreFlopPosition;
+                var villianPos = (_bettors.Count > 0) ? _bettors.Last() : Position.Empty;
 
-                bd.message += $" -> We have pre-flop chart for this situation (Hero pos {heroPos}, num bets {_numBets}, num callers {_numCallers}).\n";
+                bd.message += $" -> We have pre-flop chart for this situation (Hero pos {heroPos}, villianPos {villianPos}, num bets {_numBets}, num callers {_numCallers}).\n";
                 bd.message += $" -> We are reading AD, allin prob {pfcActionDistribution.allinProb} br prob {pfcActionDistribution.brProb}, cc prob {pfcActionDistribution.ccProb} (Modeling estimator gave br {bd.betRaiseEV:F2} cc {bd.checkCallEV:F2}).\n";
 
                 bd.actionType = pfcActionDistribution.sample(_rng);
@@ -877,7 +890,8 @@ namespace G5.Logic
                 if (_street == Street.PreFlop)
                 {
                     var heroPos = getHero().PreFlopPosition;
-                    bd.message += $" -> We do NOT have pre-flop chart for this situation (Hero pos {heroPos}, num bets {_numBets}, num callers {_numCallers}).\n";
+                    var villianPos = (_bettors.Count > 0) ? _bettors.Last() : Position.Empty;
+                    bd.message += $" -> We do NOT have pre-flop chart for this situation (Hero pos {heroPos}, villianPos {villianPos}, num bets {_numBets}, num callers {_numCallers}).\n";
                 }
 
                 bd.message += $" -> Using modeling estimator result br {bd.betRaiseEV:F2} cc {bd.checkCallEV:F2}.\n";

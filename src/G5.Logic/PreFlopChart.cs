@@ -87,7 +87,7 @@ namespace G5.Logic
 
             if (lines.Count() != 13)
             {
-                var err = $"Error: Not correct number of lines in PreFlopChart {path}. Expected 13.";
+                var err = $"Error: Not correct number of lines {lines.Count()} in PreFlopChart {path}. Expected 13.";
                 Console.WriteLine(err);
                 throw new Exception(err);
             }
@@ -102,7 +102,7 @@ namespace G5.Logic
 
                 if (splitted_line.Count != 39)
                 {
-                    var err = $"Error: Not correct length of line in PreFlopChart {path}. Expected 39.";
+                    var err = $"Error: Not correct length of line {splitted_line.Count} in PreFlopChart {path}. Expected 39.";
                     Console.WriteLine(err);
                     throw new Exception(err);
                 }
