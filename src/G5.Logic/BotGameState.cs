@@ -37,6 +37,8 @@ namespace G5.Logic
         private int _numCallers;
         private List<Position> _bettors;
 
+        private int _preFlopChartsLevel;
+
         // Options
         private bool _randomlySampleActions;
 
@@ -70,7 +72,8 @@ namespace G5.Logic
             PokerClient client, 
             TableType tableType, 
             Estimators.IActionEstimator actionEstimator,
-            bool randomlySampleActions = false)
+            bool randomlySampleActions = false,
+            int preFlopChartsLevel=4)
         {
             if (playerNames.Count() != stackSizes.Count())
                 throw new Exception("Length of playerNames and stackSizes arrays must be the same");
@@ -95,6 +98,8 @@ namespace G5.Logic
             {
                 _players.Add(new Player(playerNames[i], stackSizes[i], null));
             }
+
+            _preFlopChartsLevel = preFlopChartsLevel;
         }
 
         /// <summary>
@@ -872,7 +877,7 @@ namespace G5.Logic
             }
 
             // Try to read preflop charts
-            var pfcActionDistribution = _preFlopCharts.GetActionDistribution(this);
+            var pfcActionDistribution = _preFlopCharts.GetActionDistribution(this, _preFlopChartsLevel);
 
             if (pfcActionDistribution != null)
             {

@@ -23,12 +23,14 @@ namespace G5.Logic
                 Equity = e;
             }
 
+            public HoleCards GetHoleCards()
+            {
+                return new HoleCards(Ind);
+            }
+
             public override string ToString()
             {
-                var i = Ind / 52;
-                var j = Ind % 52;
-
-                return (new Card(i)).ToString() + (new Card(j)).ToString() + " - " + (Equity * 100).ToString("f2") + "%";
+                return GetHoleCards().ToString() + " - " + (Equity * 100).ToString("f2") + "%";
             }
         };
 
@@ -180,6 +182,45 @@ namespace G5.Logic
             });
 
             DecisionMakingDll.CutRange_FoldCallRaise(this, actionType, street, board, raiseChance, callChance, dmContext);
+        }
+
+        public Dictionary<string, float> GetCompressedRange()
+        {
+            Dictionary<string, float> result = new Dictionary<string, float>();
+
+            for (var i = 0; i < N_HOLECARDS; i++)
+            {
+                var holecards = Data[i].GetHoleCards();
+                string key;
+
+                if (holecards.Card0.rank > holecards.Card1.rank)
+                {
+                    key = $"{holecards.Card0.rank}{holecards.Card1.rank}";
+                }
+                else
+                {
+                    key = $"{holecards.Card1.rank}{holecards.Card0.rank}";
+                }
+
+                if (holecards.Card0.rank != holecards.Card1.rank)
+                {
+                    if (holecards.Card0.suite == holecards.Card1.suite)
+                    {
+                        key += "s";
+                    }
+                    else
+                    {
+                        key += "o";
+                    }
+                }
+
+                if (!result.ContainsKey(key))
+                    result[key] = 0;
+
+                result[key] += Data[i].Equity;
+            }
+
+            return result;
         }
     }
 }

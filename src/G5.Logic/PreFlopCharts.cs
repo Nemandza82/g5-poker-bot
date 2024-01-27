@@ -137,7 +137,7 @@ namespace G5.Logic
             Console.WriteLine($"Loaded {numLoaded} pre flop charts");
         }
 
-        public ActionDistribution GetActionDistribution(BotGameState gameState)
+        public ActionDistribution GetActionDistribution(BotGameState gameState, int preFlopChartsLevel)
         {
             if (gameState.getStreet() != Street.PreFlop)
                 return null;
@@ -147,72 +147,87 @@ namespace G5.Logic
 
             if (gameState.getNumBets() == 0 && gameState.getNumCallers() == 0) // RFI
             {
-                if (vs_0_bets_charts.ContainsKey(heroPos))
-                    return vs_0_bets_charts[heroPos].GetActionDistribution(gameState.getHeroHoleCards());
+                if (preFlopChartsLevel >= 0)
+                {
+                    if (vs_0_bets_charts.ContainsKey(heroPos))
+                        return vs_0_bets_charts[heroPos].GetActionDistribution(gameState.getHeroHoleCards());
+                }
             }
             else if (gameState.getNumBets() == 1 && gameState.getNumCallers() <= 1) // Facing RFI
             {
-                if (!vs_1_bet_charts.ContainsKey(heroPos))
-                    return null;
-
-                if (bettorPositions.Count == 0)
-                    return null;
-
-                if (vs_1_bet_charts[heroPos].ContainsKey(bettorPositions.Last()))
-                    return vs_1_bet_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
-            }
-            else if (gameState.getNumBets() == 2 && gameState.getNumCallers() == 0)
-            {
-                if (gameState.getHero().LastAction == ActionType.Bet || gameState.getHero().LastAction == ActionType.Raise) // Facing re-raise
+                if (preFlopChartsLevel >= 1)
                 {
-                    if (!vs_2_bets_reraise_charts.ContainsKey(heroPos))
+                    if (!vs_1_bet_charts.ContainsKey(heroPos))
                         return null;
 
                     if (bettorPositions.Count == 0)
                         return null;
 
-                    if (vs_2_bets_reraise_charts[heroPos].ContainsKey(bettorPositions.Last()))
-                        return vs_2_bets_reraise_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                    if (vs_1_bet_charts[heroPos].ContainsKey(bettorPositions.Last()))
+                        return vs_1_bet_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
                 }
-                else // 4bet (facing 2 bets first time)
+            }
+            else if (gameState.getNumBets() == 2 && gameState.getNumCallers() == 0)
+            {
+                if (preFlopChartsLevel >= 2)
                 {
-                    if (!vs_2_bets_charts.ContainsKey(heroPos))
-                        return null;
-
-                    if (bettorPositions.Count != 2)
-                        return null;
-
-                    var villian0Pos = bettorPositions[0];
-                    var villian1Pos = bettorPositions[1];
-
-                    if (vs_2_bets_charts[heroPos].ContainsKey(villian0Pos))
+                    if (gameState.getHero().LastAction == ActionType.Bet || gameState.getHero().LastAction == ActionType.Raise) // Facing re-raise
                     {
-                        if (vs_2_bets_charts[heroPos][villian0Pos].ContainsKey(villian1Pos))
-                            return vs_2_bets_charts[heroPos][villian0Pos][villian1Pos].GetActionDistribution(gameState.getHeroHoleCards());
+                        if (!vs_2_bets_reraise_charts.ContainsKey(heroPos))
+                            return null;
+
+                        if (bettorPositions.Count == 0)
+                            return null;
+
+                        if (vs_2_bets_reraise_charts[heroPos].ContainsKey(bettorPositions.Last()))
+                            return vs_2_bets_reraise_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                    }
+                    else // 4bet (facing 2 bets first time)
+                    {
+                        if (!vs_2_bets_charts.ContainsKey(heroPos))
+                            return null;
+
+                        if (bettorPositions.Count != 2)
+                            return null;
+
+                        var villian0Pos = bettorPositions[0];
+                        var villian1Pos = bettorPositions[1];
+
+                        if (vs_2_bets_charts[heroPos].ContainsKey(villian0Pos))
+                        {
+                            if (vs_2_bets_charts[heroPos][villian0Pos].ContainsKey(villian1Pos))
+                                return vs_2_bets_charts[heroPos][villian0Pos][villian1Pos].GetActionDistribution(gameState.getHeroHoleCards());
+                        }
                     }
                 }
             }
             else if (gameState.getNumBets() == 3 && gameState.getNumCallers() == 0)
             {
-                if (!vs_3_bets_charts.ContainsKey(heroPos))
-                    return null;
+                if (preFlopChartsLevel >= 3)
+                {
+                    if (!vs_3_bets_charts.ContainsKey(heroPos))
+                        return null;
 
-                if (bettorPositions.Count == 0)
-                    return null;
+                    if (bettorPositions.Count == 0)
+                        return null;
 
-                if (vs_3_bets_charts[heroPos].ContainsKey(bettorPositions.Last()))
-                    return vs_3_bets_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                    if (vs_3_bets_charts[heroPos].ContainsKey(bettorPositions.Last()))
+                        return vs_3_bets_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                }
             }
             else if (gameState.getNumBets() == 4 && gameState.getNumCallers() == 0)
             {
-                if (!vs_4_bets_charts.ContainsKey(heroPos))
-                    return null;
+                if (preFlopChartsLevel >= 4)
+                {
+                    if (!vs_4_bets_charts.ContainsKey(heroPos))
+                        return null;
 
-                if (bettorPositions.Count == 0)
-                    return null;
+                    if (bettorPositions.Count == 0)
+                        return null;
 
-                if (vs_4_bets_charts[heroPos].ContainsKey(bettorPositions.Last()))
-                    return vs_4_bets_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                    if (vs_4_bets_charts[heroPos].ContainsKey(bettorPositions.Last()))
+                        return vs_4_bets_charts[heroPos][bettorPositions.Last()].GetActionDistribution(gameState.getHeroHoleCards());
+                }
             }
 
             return null;

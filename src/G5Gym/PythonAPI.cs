@@ -66,7 +66,8 @@ namespace G5Gym
             int heroInd, 
             int buttonInd, 
             int bigBlindSize, 
-            bool randomlySampleActions)
+            bool randomlySampleActions,
+            int preFlopChartsLevel)
         {
             _botGameStates[gameName] = new BotGameState(playerNames, 
                 stackSizes,
@@ -76,7 +77,8 @@ namespace G5Gym
                 PokerClient.PokerKing,
                 TableType.SixMax,
                 new G5.Logic.Estimators.ModelingEstimator(_opponentModeling, PokerClient.PokerKing),
-                randomlySampleActions);
+                randomlySampleActions,
+                preFlopChartsLevel);
 
             Console.WriteLine($"Created {gameName} BotGameState successfully");
             return gameName;
@@ -140,6 +142,16 @@ namespace G5Gym
                 return;
 
             players[playerIndex].SetPlayerName(playerName);
+        }
+
+        public dynamic getPlayerRange(string gameName, int playerIndex)
+        {
+            var players = _botGameStates[gameName].getPlayers();
+
+            if (playerIndex < 0 || playerIndex >= players.Count)
+                return "Unknows player index";
+
+            return players[playerIndex].Range.GetCompressedRange();
         }
 
         public dynamic isPlayerInIngame(string gameName, int playerIndex)
