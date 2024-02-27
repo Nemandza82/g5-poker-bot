@@ -221,7 +221,7 @@ namespace G5Gym
 
         public void goToFlop(string gameName, string card0, string card1, string card2)
         {
-            List<Card> cards = [new Card(card0), new Card(card1), new Card(card2)];
+            List<Card> cards = new List<Card> { new Card(card0), new Card(card1), new Card(card2) };
             _botGameStates[gameName].goToNextStreet(cards);
         }
 

@@ -47,6 +47,8 @@ namespace G5.Controls
             }
 
             this.BackColor = (toAct) ? Color.LightGray : Color.DimGray;
+            labelStack.ForeColor = (toAct) ? Color.Black : Color.White;
+            labelName.ForeColor = (toAct) ? Color.Black : Color.White;
         }
     }
 }

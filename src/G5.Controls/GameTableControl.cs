@@ -17,12 +17,16 @@ namespace G5.Controls
         private PlayerControlSmall[] _playerControls = new PlayerControlSmall[6];
         private PictureBox[] _buttonImages = new PictureBox[6];
         private Label[] _labelsInPot = new Label[6];
+        private Label _labelHandsPlayed = new Label();
         private string _raiseText;
 
         public event EventHandler NextButtonPressed;
         public event EventHandler FoldButtonPressed;
         public event EventHandler CallButtonPressed;
         public event EventHandler<int> RaiseButtonPressed;
+        public event EventHandler<int> AllinButtonPressed;
+        public event EventHandler<int> EditBetTextBoxTextChanged;
+        public event KeyEventHandler EditBetTextBoxKeyDown;
 
         public GameTableControl()
         {
@@ -48,6 +52,7 @@ namespace G5.Controls
             _labelsInPot[3] = labelInPot3;
             _labelsInPot[4] = labelInPot4;
             _labelsInPot[5] = labelInPot5;
+            _labelHandsPlayed = labelHandsPlayed;
         }
 
         private Bitmap cardImage(Card card)
@@ -91,13 +96,13 @@ namespace G5.Controls
             _labelsInPot[playerId].Visible = false;
         }
 
-        public void updatePlayerInfo(int playerId, string name, int stack, int moneyInPot, Status statusInHand, HoleCards holeCards, 
+        public void updatePlayerInfo(int playerId, string name, int stack, int betAmount, Status statusInHand, HoleCards holeCards, 
             Position preFlopPosition, bool toAct)
         {
             _playerControls[playerId].Visible = true;
             _playerControls[playerId].updatePlayerInfo(name, stack, statusInHand, holeCards, preFlopPosition, toAct);
-            _labelsInPot[playerId].Text = moneyToString(moneyInPot);
-            _labelsInPot[playerId].Visible = (moneyInPot != 0);
+            _labelsInPot[playerId].Text = moneyToString(betAmount);
+            _labelsInPot[playerId].Visible = (betAmount != 0);
         }
 
         public void setButtonPosition(int pos)
@@ -119,6 +124,8 @@ namespace G5.Controls
             buttonFold.Enabled = false;
             buttonCheckCall.Enabled = false;
             buttonBetRaise.Enabled = false;
+            buttonAllin.Enabled = false;
+            textBoxEditBet.Enabled = false;
             _trackBarRaiseAmm.Enabled = false;
         }
 
@@ -127,6 +134,8 @@ namespace G5.Controls
             buttonFold.Enabled = true;
             buttonCheckCall.Enabled = true;
             buttonBetRaise.Enabled = true;
+            buttonAllin.Enabled = true;
+            textBoxEditBet.Enabled = true;
             _trackBarRaiseAmm.Enabled = true;
         }
 
@@ -160,6 +169,11 @@ namespace G5.Controls
             listBoxLog.SelectedIndex = listBoxLog.Items.Count - 1;
         }
 
+        public void updateHandsPlayed(int handsplayed)
+        {
+            _labelHandsPlayed.Text = Convert.ToString(handsplayed);
+        }
+
         private void buttonNext_Click(object sender, EventArgs e)
         {
             NextButtonPressed?.Invoke(sender, e);
@@ -180,9 +194,62 @@ namespace G5.Controls
             RaiseButtonPressed?.Invoke(sender, _trackBarRaiseAmm.Value);
         }
 
+        private void buttonAllin_Click(object sender, EventArgs e)
+        {
+            _trackBarRaiseAmm.Value = _trackBarRaiseAmm.Maximum;
+            AllinButtonPressed?.Invoke(sender, _trackBarRaiseAmm.Value);
+        }
+
+        private void textBoxEditBet_TextChanged(object sender, EventArgs e)
+        {
+            string str_betsize = textBoxEditBet.Text;
+            double parsedValue;
+            if (!double.TryParse(str_betsize, out parsedValue) && str_betsize != "")
+            {
+                int s = textBoxEditBet.SelectionStart;
+                textBoxEditBet.Text = str_betsize.Substring(0, str_betsize.Length - 1);
+                textBoxEditBet.SelectionStart = s;
+            }
+            else if (str_betsize != "")
+            {
+                try
+                {
+                    int betsize = Convert.ToInt32(Convert.ToDouble(str_betsize) * 100);
+                    if (betsize >= _trackBarRaiseAmm.Minimum && betsize <= _trackBarRaiseAmm.Maximum)
+                    {
+                        _trackBarRaiseAmm.Value = betsize;
+                        buttonBetRaise.Text = _raiseText + moneyToString(betsize);
+                        EditBetTextBoxTextChanged?.Invoke(sender, _trackBarRaiseAmm.Value);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error catched: " + ex.Message);
+                }
+            }
+            else if (str_betsize == "")
+            {
+                _trackBarRaiseAmm.Value = _trackBarRaiseAmm.Minimum;
+                buttonBetRaise.Text = _raiseText + moneyToString(_trackBarRaiseAmm.Minimum);
+            }
+        }
+
+        private void textBoxEditBet_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Return)
+            {
+                EditBetTextBoxKeyDown?.Invoke(sender, e);
+            }
+        }
+
         private void trackBarRaiseAmm_Scroll(object sender, EventArgs e)
         {
             buttonBetRaise.Text = _raiseText + moneyToString(_trackBarRaiseAmm.Value);
+        }
+
+        private void playerControlSmall2_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
