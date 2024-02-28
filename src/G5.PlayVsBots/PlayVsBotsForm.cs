@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using G5.Logic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace G5.PlayVsBots
 {
@@ -26,11 +28,16 @@ namespace G5.PlayVsBots
         private int _bigBlindSize;
         private int _startStackSize;
         private int _totalInvestedMoney;
+        private int _numberOfHandsPlayed;
+
+        //private Thread t = new Thread(displayState).Start();
+        static readonly object locker = new object();
 
         public PlayVsBotsForm()
         {
             InitializeComponent();
 
+            _numberOfHandsPlayed = 0;
             _bigBlindSize = 4;
             _options = new OpponentModeling.Options();
             _options.recentHandsCount = 30;
@@ -44,6 +51,8 @@ namespace G5.PlayVsBots
             _gameTableControl.FoldButtonPressed += buttonFold_Click;
             _gameTableControl.CallButtonPressed += buttonCheckCall_Click;
             _gameTableControl.RaiseButtonPressed += buttonBetRaise_Click;
+            _gameTableControl.AllinButtonPressed += buttonAllin_Click;
+            _gameTableControl.EditBetTextBoxKeyDown += textBoxEditBet_KeyDown;
 
             _heroInd = 0;
             _startStackSize = _bigBlindSize * 100;
@@ -66,7 +75,10 @@ namespace G5.PlayVsBots
 
             _totalInvestedMoney = _startStackSize;
             startNewHand();
-            displayState();
+            lock (locker)
+            {
+                displayState();
+            }
         }
 
         private string moneyToString(int money)
@@ -82,7 +94,9 @@ namespace G5.PlayVsBots
         private void displayState()
         {
             int heroStack = getPlayers()[_heroInd].Stack;
-            this.Text = "Play vs Bots (" + moneyToString(heroStack - _totalInvestedMoney) + ")";
+            //this.Text = "Play vs Bots (Stack: " + moneyToString(heroStack - _totalInvestedMoney) + ", Blinds: " + moneyToString(_bigBlindSize/2) + "/" + moneyToString(_bigBlindSize) + ")";
+            double bb_100 = (((heroStack - _startStackSize) / _bigBlindSize) * 100) / _numberOfHandsPlayed;
+            this.Text = "Play vs Bots ( " + bb_100.ToString() +  "bb/100, Blinds: " + moneyToString(_bigBlindSize / 2) + "/" + moneyToString(_bigBlindSize) + " )";
 
             int playerToActInd = _botGameStates[_heroInd].getPlayerToActInd();
             int buttonInd = _botGameStates[_heroInd].getButtonInd();
@@ -106,7 +120,7 @@ namespace G5.PlayVsBots
                 Player player = getPlayers()[i];
                 int wherePlayerSits = (NUM_PLAYERS == 2) ? (i * 3) : i;
 
-                _gameTableControl.updatePlayerInfo(wherePlayerSits, player.Name, player.Stack, player.MoneyInPot, player.StatusInHand, hh,
+                _gameTableControl.updatePlayerInfo(wherePlayerSits, player.Name, player.Stack, player.BetAmount, player.StatusInHand, hh,
                     player.PreFlopPosition, (playerToActInd == i));
 
                 if (i == buttonInd)
@@ -127,6 +141,8 @@ namespace G5.PlayVsBots
 
             _gameTableControl.setPotSize(_botGameStates[_heroInd].potSize());
             _gameTableControl.displayBoard(_botGameStates[_heroInd].getBoard().Cards);
+            if (_gameTableControl.buttonNext.Enabled)
+                buttonNext_Click(this, null);
         }
 
         private void finishHand()
@@ -163,8 +179,15 @@ namespace G5.PlayVsBots
             _opponentModeling.addHand(_botGameStates[0].getCurrentHand());
         }
 
+        public int getNumberOfHandsPlayed()
+        {
+            return _numberOfHandsPlayed;
+        }
+
         private void startNewHand()
         {
+            _numberOfHandsPlayed++;
+            _gameTableControl.updateHandsPlayed(_numberOfHandsPlayed);
             for (int i = 0; i < NUM_PLAYERS; i++)
             {
                 var player = getPlayers()[i];
@@ -226,6 +249,12 @@ namespace G5.PlayVsBots
         {
             foreach (var botGameState in _botGameStates)
                 botGameState.playerFolds();
+        }
+
+        private void playerGoesAllIn()
+        {
+            foreach (var botGameState in _botGameStates)
+                botGameState.playerGoesAllIn();
         }
 
         private void buttonNext_Click(object sender, EventArgs e)
@@ -292,15 +321,20 @@ namespace G5.PlayVsBots
                 var botName = getPlayers()[playerToActInd].Name;
                 _gameTableControl.log(botName + actionStr + workTimeStr);
             }
-
-            displayState();
+            lock (locker)
+            {
+                displayState();
+            }
         }
 
         private void buttonFold_Click(object sender, EventArgs e)
         {
             _gameTableControl.log(_botGameStates[_heroInd].getPlayerToAct().Name + " folds");
             playerFolds();
-            displayState();
+            lock (locker)
+            {
+                displayState();
+            }
         }
 
         private void buttonCheckCall_Click(object sender, EventArgs e)
@@ -308,7 +342,10 @@ namespace G5.PlayVsBots
             var actionStr = (_botGameStates[_heroInd].getAmountToCall() > 0) ? "calls" : "checks";
             _gameTableControl.log(_botGameStates[_heroInd].getPlayerToAct().Name + " " + actionStr);
             playerCheckCalls();
-            displayState();
+            lock (locker)
+            {
+                displayState();
+            }
         }
 
         private void buttonBetRaise_Click(object sender, int raiseAmmount)
@@ -318,8 +355,38 @@ namespace G5.PlayVsBots
 
             var ra = (raiseAmmount == 0) ? _botGameStates[_heroInd].getRaiseAmmount() : raiseAmmount;
             playerBetRaisesBy(ra);
+            lock (locker)
+            {
+                displayState();
+            }
+        }
 
-            displayState();
+        private void buttonAllin_Click(object sender, int raiseAmmount)
+        {
+            _gameTableControl.log(_botGameStates[_heroInd].getPlayerToAct().Name + " goes All-in");
+            playerGoesAllIn();
+            lock (locker)
+            {
+                displayState();
+            }
+        }
+
+        private void textBoxEditBet_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Return)
+            {
+                string str_betsize = _gameTableControl.textBoxEditBet.Text;
+                int raiseAmmount = Convert.ToInt32(Convert.ToDouble(str_betsize) * 100);
+                var actionStr = (_botGameStates[_heroInd].getNumBets() > 0) ? "raises" : "bets";
+                _gameTableControl.log(_botGameStates[_heroInd].getPlayerToAct().Name + " " + actionStr);
+
+                var ra = (raiseAmmount == 0) ? _botGameStates[_heroInd].getRaiseAmmount() : raiseAmmount;
+                playerBetRaisesBy(ra);
+                lock (locker)
+                {
+                    displayState();
+                }
+            }
         }
     }
 }

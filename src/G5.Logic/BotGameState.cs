@@ -771,6 +771,15 @@ namespace G5.Logic
             goToNextPlayer();
         }
 
+        public void playerGoesAllIn()
+        {
+            Console.WriteLine(getPlayerToAct().Name + " goes All-in");
+            _currentHand.addAction(_street, getPlayerToAct().Name, ActionType.AllIn, 0);
+
+            getPlayerToAct().GoesAllIn();
+            goToNextPlayer();
+        }
+
         public struct BotDecision
         {
             public ActionType actionType;

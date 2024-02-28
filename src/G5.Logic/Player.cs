@@ -15,6 +15,7 @@ namespace G5.Logic
         public PlayerModel Model { get; set; }
 
         public int Stack { get; private set; }
+        public int BetAmount { get; set; }
         public int MoneyInPot { get; private set; }
         public int MoneyWon { get; private set; }
 
@@ -22,6 +23,7 @@ namespace G5.Logic
         {
             Name = aName;
             Stack = stack;
+            BetAmount = 0;
             MoneyInPot = 0;
             MoneyWon = 0;
 
@@ -38,6 +40,7 @@ namespace G5.Logic
         {
             Name = oldPlayer.Name;
             Stack = oldPlayer.Stack;
+            BetAmount = oldPlayer.BetAmount;
             MoneyInPot = oldPlayer.MoneyInPot;
             MoneyWon = oldPlayer.MoneyWon;
 
@@ -69,6 +72,7 @@ namespace G5.Logic
         {
             Debug.Assert(StatusInHand == Status.ToAct);
             StatusInHand = Status.ToAct;
+            BetAmount = amount;
             MoneyInPot += amount;
             Stack -= amount;
         }
@@ -93,6 +97,7 @@ namespace G5.Logic
             StatusInHand = Status.Acted;
             LastAction = ActionType.Call;
 
+            BetAmount = amount;
             MoneyInPot += amount;
             Stack -= amount;
         }
@@ -104,6 +109,7 @@ namespace G5.Logic
             LastAction = ActionType.Raise;
 
             int amount = toAmount - MoneyInPot;
+            BetAmount = amount;
             MoneyInPot = toAmount;
             Stack -= amount;
 
@@ -120,7 +126,8 @@ namespace G5.Logic
             Debug.Assert(StatusInHand == Status.ToAct);
             StatusInHand = Status.AllIn;
             LastAction = ActionType.AllIn;
-
+            
+            BetAmount = amount;
             MoneyInPot += amount;
             Stack = 0;
 
@@ -145,6 +152,7 @@ namespace G5.Logic
         {
             PrevStreetAction = LastAction;
             LastAction = ActionType.Fold;
+            BetAmount = 0;
         }
 
         public void ResetHand()
@@ -154,6 +162,7 @@ namespace G5.Logic
             PrevStreetAction = ActionType.Fold;
             Range.Reset();
 
+            BetAmount = 0;
             MoneyInPot = 0;
             MoneyWon = 0;
         }

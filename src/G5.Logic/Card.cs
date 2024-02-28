@@ -44,12 +44,12 @@ namespace G5.Logic
         /// <summary>
         /// Broj/rank karte
         /// </summary>
-        public Rank rank { get; private set; }
+        public Rank rank { get; set; }
 
         /// <summary>
         /// Boja/znak/suite karte
         /// </summary>
-        public Suite suite { get; private set; }
+        public Suite suite { get; set; }
 
         public Card(int value) : this()
         {
