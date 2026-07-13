@@ -114,7 +114,7 @@ namespace G5.Logic
             {
                 var startTime = DateTime.Now;
 
-                using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+                using (BinaryReader reader = new BinaryReader(File.OpenRead(fileName)))
                 {
                     int numStats = reader.ReadInt32();
                     var fullStatsList = new List<PlayerStats>();

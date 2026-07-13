@@ -12,7 +12,8 @@
         PokerStars,
         G5,
         Acpc,
-        PokerKing
+        PokerKing,
+        Chipzen
     }
 
     /// <summary>

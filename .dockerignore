@@ -1,0 +1,24 @@
+**/bin/
+**/obj/
+**/.vs/
+dl/
+docs/
+thirdparty/
+.git/
+*.md
+
+# Only redist/PreFlopEquities.txt, redist/full_stats_list_hu.bin, and
+# redist/PreFlopCharts/200bb/ are needed (heads-up only); skip the rest.
+redist/full_stats_list_6max.bin
+redist/full_stats_list_6max_2m.bin
+redist/PreFlopCharts/100bb/
+redist/tbb.dll
+
+# Not needed to build G5.Chipzen (native lib + G5.Logic + G5.Chipzen only).
+src/G5.Acpc/
+src/G5.Controls/
+src/G5.PlayVsBots/
+src/G5Gym/
+src/3rdParty/
+src/*.sh
+src/*.sln
