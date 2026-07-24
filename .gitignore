@@ -5,3 +5,4 @@ obj
 /dl/.vscode
 /dl/__pycache__
 /tools/mock-chipzen-server/bin
+*.tar.gz

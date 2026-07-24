@@ -62,8 +62,10 @@ namespace G5.Chipzen
                 authenticate["token"] = _token;
             else if (!string.IsNullOrEmpty(_ticket))
                 authenticate["ticket"] = _ticket;
-            else
-                throw new InvalidOperationException("Either a token or a ticket is required to authenticate.");
+            // Otherwise send `authenticate` with neither field. A strictly conformant server
+            // would reject this (close code 4001) per the documented schema, but a sandboxed
+            // executor relying on network-level isolation instead of a token may accept it --
+            // let the server's response settle the question rather than refuse to try.
 
             await SendAsync(authenticate, ct);
 
