@@ -73,7 +73,8 @@ namespace G5.Logic
             TableType tableType, 
             Estimators.IActionEstimator actionEstimator,
             bool randomlySampleActions = false,
-            int preFlopChartsLevel=4)
+            int preFlopChartsLevel=4,
+            PreFlopCharts preFlopCharts = null)
         {
             if (playerNames.Count() != stackSizes.Count())
                 throw new Exception("Length of playerNames and stackSizes arrays must be the same");
@@ -81,8 +82,15 @@ namespace G5.Logic
             _actionEstimator = actionEstimator;
             _randomlySampleActions = randomlySampleActions;
 
-            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            _preFlopCharts = new PreFlopCharts(Path.Combine(assemblyFolder, "PreFlopCharts", "200bb"));
+            if (preFlopCharts != null)
+            {
+                _preFlopCharts = preFlopCharts;
+            }
+            else
+            {
+                string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                _preFlopCharts = new PreFlopCharts(Path.Combine(assemblyFolder, "PreFlopCharts", "200bb"));
+            }
 
             _tableType = tableType;
             _players = new List<Player>();
@@ -885,8 +893,8 @@ namespace G5.Logic
                 bd.betRaiseEV = -10.0f;
             }
 
-            // Try to read preflop charts
-            var pfcActionDistribution = _preFlopCharts.GetActionDistribution(this, _preFlopChartsLevel);
+            // Preflop charts unconnected -- always fall through to the modeling estimator below.
+            ActionDistribution pfcActionDistribution = null;
 
             if (pfcActionDistribution != null)
             {

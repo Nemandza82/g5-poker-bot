@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using G5.Logic;
@@ -34,14 +36,25 @@ namespace G5.Chipzen
             using var cts = new CancellationTokenSource();
             Console.CancelKeyPress += (_, e) => { e.Cancel = true; cts.Cancel(); };
 
-            // Kick off the (relatively slow) opponent-model stats-file load in the background,
-            // overlapping it with the WebSocket connect/handshake below rather than adding it to
-            // the container's attach-time budget.
+            // Kick off every slow, match-independent load in the background at process start,
+            // overlapping all of it with the WebSocket connect/handshake below rather than
+            // leaving any of it to happen lazily (and synchronously) on the first round_start --
+            // see the "lazy loading on first hand" investigation for why that was timing out the
+            // bot's first action.
             var opponentModelingTask = Task.Run(() =>
             {
                 var options = new OpponentModeling.Options { recentHandsCount = 1000 };
                 return new OpponentModeling("full_stats_list_hu.bin", TableType.HeadsUp, options);
             });
+
+            string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            var preFlopChartsTask = Task.Run(() =>
+                new PreFlopCharts(Path.Combine(assemblyFolder, "PreFlopCharts", "200bb")));
+
+            // Also forces the native DecisionMaking.dll/libdec_making.so to be loaded/linked now
+            // (the first P/Invoke call into it is what actually maps the library into the
+            // process), instead of on the first hand.
+            var dmContextTask = Task.Run(() => new DecisionMakingContext());
 
             using var client = new ChipzenClient(wsUrl, token, ticket, clientName: "g5-chipzen", clientVersion: "0.1.0");
 
@@ -50,7 +63,7 @@ namespace G5.Chipzen
                 await client.ConnectAsync(cts.Token);
                 Console.WriteLine($"Connected. Match id: {client.MatchId}");
 
-                using var game = new ChipzenGame(opponentModelingTask);
+                using var game = new ChipzenGame(opponentModelingTask, preFlopChartsTask, dmContextTask);
                 await client.RunAsync(game, cts.Token);
             }
             catch (Exception ex)

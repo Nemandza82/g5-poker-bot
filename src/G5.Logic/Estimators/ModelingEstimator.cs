@@ -17,19 +17,31 @@ namespace G5.Logic.Estimators
         private OpponentModeling _opponentModeling;
         private DecisionMakingContext _dmContext;
         private PokerClient _pokerClient;
+        private readonly bool _ownsContext;
 
-        public ModelingEstimator(OpponentModeling oppModelling, PokerClient pokerClient)
+        public ModelingEstimator(OpponentModeling oppModelling, PokerClient pokerClient, DecisionMakingContext dmContext = null)
         {
             _opponentModeling = oppModelling;
             _pokerClient = pokerClient;
-            _dmContext = new DecisionMakingContext();
+
+            if (dmContext != null)
+            {
+                _dmContext = dmContext;
+                _ownsContext = false;
+            }
+            else
+            {
+                _dmContext = new DecisionMakingContext();
+                _ownsContext = true;
+            }
         }
 
         public void Dispose()
         {
             if (_dmContext != null)
             {
-                _dmContext.Dispose();
+                if (_ownsContext)
+                    _dmContext.Dispose();
                 _dmContext = null;
             }
         }

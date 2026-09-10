@@ -7,7 +7,7 @@ using System.Text;
 
 namespace G5.Logic
 {
-    internal class PreFlopCharts
+    public class PreFlopCharts
     {
         private Dictionary<Position, PreFlopChart> vs_0_bets_charts = new Dictionary<Position, PreFlopChart>();
 
@@ -137,7 +137,7 @@ namespace G5.Logic
             Console.WriteLine($"Loaded {numLoaded} pre flop charts");
         }
 
-        public ActionDistribution GetActionDistribution(BotGameState gameState, int preFlopChartsLevel)
+        internal ActionDistribution GetActionDistribution(BotGameState gameState, int preFlopChartsLevel)
         {
             if (gameState.getStreet() != Street.PreFlop)
                 return null;

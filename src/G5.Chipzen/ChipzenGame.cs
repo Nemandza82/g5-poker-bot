@@ -17,8 +17,11 @@ namespace G5.Chipzen
     public sealed class ChipzenGame : IChipzenGame, IDisposable
     {
         private readonly Task<OpponentModeling> _opponentModelingTask;
+        private readonly Task<PreFlopCharts> _preFlopChartsTask;
+        private readonly Task<DecisionMakingContext> _dmContextTask;
 
         private BotGameState? _botGameState;
+        private DecisionMakingContext? _dmContext;
         private int _heroInd = -1;
         private int _bigBlindSize;
 
@@ -31,9 +34,12 @@ namespace G5.Chipzen
         // convert between the two conventions in both directions.
         private readonly int[] _streetContribution = new int[2];
 
-        public ChipzenGame(Task<OpponentModeling> opponentModelingTask)
+        public ChipzenGame(Task<OpponentModeling> opponentModelingTask, Task<PreFlopCharts> preFlopChartsTask,
+            Task<DecisionMakingContext> dmContextTask)
         {
             _opponentModelingTask = opponentModelingTask;
+            _preFlopChartsTask = preFlopChartsTask;
+            _dmContextTask = dmContextTask;
         }
 
         private BotGameState Bgs => _botGameState ?? throw new InvalidOperationException("Match has not started yet.");
@@ -61,9 +67,12 @@ namespace G5.Chipzen
 
             if (_botGameState is null)
             {
-                // Blocks only if the background stats-file load (started at process startup, in
-                // parallel with the WebSocket connect/handshake) hasn't finished yet.
-                var opponentModeling = _opponentModelingTask.GetAwaiter().GetResult();
+                // Blocks only if any of these background loads (all started at process startup,
+                // in parallel with the WebSocket connect/handshake) haven't finished yet.
+                Task.WaitAll(_opponentModelingTask, _preFlopChartsTask, _dmContextTask);
+                var opponentModeling = _opponentModelingTask.Result;
+                var preFlopCharts = _preFlopChartsTask.Result;
+                _dmContext = _dmContextTask.Result;
 
                 var playerNames = new string[stacks.Length];
                 playerNames[_heroInd] = "Hero";
@@ -71,7 +80,8 @@ namespace G5.Chipzen
 
                 _botGameState = new BotGameState(playerNames, stacks, _heroInd, dealerSeat, _bigBlindSize,
                     PokerClient.Chipzen, TableType.HeadsUp,
-                    new ModelingEstimator(opponentModeling, PokerClient.Chipzen));
+                    new ModelingEstimator(opponentModeling, PokerClient.Chipzen, _dmContext),
+                    preFlopCharts: preFlopCharts);
             }
             else
             {
@@ -231,6 +241,11 @@ namespace G5.Chipzen
         {
             _botGameState?.Dispose();
             _botGameState = null;
+
+            // ModelingEstimator no longer owns this (it was injected), so it doesn't dispose it --
+            // that responsibility now lives here, at the same scope that created it.
+            _dmContext?.Dispose();
+            _dmContext = null;
         }
     }
 }
